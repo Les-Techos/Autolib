@@ -4,23 +4,27 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Autolib</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/Site.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/mangas.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    </environment>
 </head>
 <body>
     <header>
         <partial name="~/Views/Shared/_Navigation.cshtml" />
     </header>
 
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div class="container body-content">
+        @RenderBody()
+
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - Autolib - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="container-fluid text-center">
+        <div class="footer-copyright text-center py-3">
+            © 2020 Copyright:CV
+            <p> @DateTime.Now.Year - Web Manga Application</p>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

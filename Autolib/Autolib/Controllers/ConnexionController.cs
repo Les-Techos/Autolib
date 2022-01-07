@@ -12,25 +12,25 @@ namespace Autolib.Controllers
 {
     public class ConnexionController : Controller
     {
-        // GET: HomeController1
+        // GET: ConnexionController
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: HomeController1/Details/5
+        // GET: ConnexionController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: HomeController1/Create
+        // GET: ConnexionController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: HomeController1/Create
+        // POST: ConnexionController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -45,13 +45,13 @@ namespace Autolib.Controllers
             }
         }
 
-        // GET: HomeController1/Edit/5
+        // GET: ConnexionController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: HomeController1/Edit/5
+        // POST: ConnexionController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -66,13 +66,13 @@ namespace Autolib.Controllers
             }
         }
 
-        // GET: HomeController1/Delete/5
+        // GET: ConnexionController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: HomeController1/Delete/5
+        // POST: ConnexionController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
@@ -86,7 +86,6 @@ namespace Autolib.Controllers
                 return View();
             }
         }
-
         [HttpPost]
         public ActionResult Controle()
         {
@@ -98,7 +97,7 @@ namespace Autolib.Controllers
                 try
                 {
 
-                    Client unUtilisateur = ServiceClient.getInstance().GetUnUtilisateur(login);
+                    Client unUtilisateur = ServiceClient.getInstance().GetClient(login);
                     if (unUtilisateur != null)
                     {
                         try
@@ -115,7 +114,7 @@ namespace Autolib.Controllers
                             if (MonMotPassHash.VerifyPassword(salt, mdp, tempo))
                             {
                                 HttpContext.Session.SetInt32("id", unUtilisateur.IdClient);
-                                HttpContext.Session.SetString("name", unUtilisateur.Nom + " " + unUtilisateur.Prenom);
+                                HttpContext.Session.SetString("nom", unUtilisateur.Nom + " " + unUtilisateur.Prenom);
                             }
                             else
                             {
@@ -148,5 +147,6 @@ namespace Autolib.Controllers
                 return RedirectToAction("Index", "Connexion");
             }
         }
+
     }
 }
