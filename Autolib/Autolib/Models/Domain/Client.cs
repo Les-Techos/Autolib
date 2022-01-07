@@ -12,6 +12,9 @@ namespace Autolib.Models.Domain
         }
 
         public int IdClient { get; set; }
+        public string Login { get; set; }
+        public string Paswd { get; set; }
+        public string Salt { get; set; }
         public string Nom { get; set; }
         public string Prenom { get; set; }
         public DateTime? DateNaissance { get; set; }
