@@ -23,16 +23,16 @@ namespace Autolib.Controllers
 
         public IActionResult Index()
         {
-            Vehicule monVehicule = null;
-
+            List<Station> stations = null;
             try
             {
-                monVehicule = ServiceVehicule.getInstance().GetVehicule(5);
+                stations = ServiceStation.getInstance().GetStations();
+
             }catch(Exception e)
             {
                 ModelState.AddModelError("Erreur", "Echec de la récupération d'un vehicule" + e.Message);
             }
-            return View(monVehicule);
+            return View(stations);
         }
 
         public IActionResult Privacy()

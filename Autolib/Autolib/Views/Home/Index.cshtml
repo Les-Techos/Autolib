@@ -10,5 +10,8 @@
 </div>
 @if (Model != null)
 {
-<p>Lattitude vehicule 5 : </p> @Model.Rfid
+@foreach(var st in Model)
+                {
+<p> Station : @st.Latitude / @st.Longitude </p>
+                }
 }

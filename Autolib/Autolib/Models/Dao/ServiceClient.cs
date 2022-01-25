@@ -13,29 +13,26 @@ namespace Autolib.Models.Dao
 
         public static ServiceClient getInstance()
         {
-            if (ServiceClient.instance == null)
+            if(ServiceClient.instance == null)
             {
                 ServiceClient.instance = new ServiceClient();
-                // on définit un contexte commun à toutes les requêtes
-                context = new autolibContext();
+                ServiceClient.context = new autolibContext();
             }
+
             return ServiceClient.instance;
         }
 
-        public Client GetUnUtilisateur(String login)
+        public Client GetClient(String id)
         {
-            Client unUtilisateur = null;
+            Client vec = null;
 
             try
             {
-                unUtilisateur = (from u in context.Client
-                                 where u.Login == login
-                                 select u)
-                           .FirstOrDefault();
-
-                return unUtilisateur;
-            }
-            catch (Exception e)
+                vec = (from v in context.Client
+                              where v.Login == id
+                              select v).FirstOrDefault();
+                return vec;
+            }catch(Exception e)
             {
                 throw new Exception(e.Message);
             }
