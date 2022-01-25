@@ -88,6 +88,13 @@ namespace Autolib.Models.Domain
                     .HasColumnName("date_naissance")
                     .HasColumnType("date");
 
+                entity.Property(e => e.Login)
+                    .IsRequired()
+                    .HasColumnName("login")
+                    .HasColumnType("varchar(50)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
                 entity.Property(e => e.Nom)
                     .IsRequired()
                     .HasColumnName("nom")
@@ -95,10 +102,23 @@ namespace Autolib.Models.Domain
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
+                entity.Property(e => e.Paswd)
+                    .IsRequired()
+                    .HasColumnName("paswd")
+                    .HasColumnType("varchar(100)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
                 entity.Property(e => e.Prenom)
                     .IsRequired()
                     .HasColumnName("prenom")
                     .HasColumnType("varchar(45)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.Salt)
+                    .IsRequired()
+                    .HasColumnType("varchar(100)")
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
             });
