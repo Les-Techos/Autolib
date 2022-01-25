@@ -5441,19 +5441,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Tim\\.nuget\\packages\\": {}
+    "C:\\Users\\romai\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\OneDrive\\OneDrive - etu.univ-lyon1.fr\\Polytech - Perso\\ISI - Prog\\Autolib\\Autolib\\Autolib\\Autolib.csproj",
+      "projectUniqueName": "D:\\A les docs de Romain\\Superieur\\Semestre 5\\isi c#\\Autolib\\Autolib\\Autolib\\Autolib.csproj",
       "projectName": "Autolib",
-      "projectPath": "D:\\OneDrive\\OneDrive - etu.univ-lyon1.fr\\Polytech - Perso\\ISI - Prog\\Autolib\\Autolib\\Autolib\\Autolib.csproj",
-      "packagesPath": "C:\\Users\\Tim\\.nuget\\packages\\",
-      "outputPath": "D:\\OneDrive\\OneDrive - etu.univ-lyon1.fr\\Polytech - Perso\\ISI - Prog\\Autolib\\Autolib\\Autolib\\obj\\",
+      "projectPath": "D:\\A les docs de Romain\\Superieur\\Semestre 5\\isi c#\\Autolib\\Autolib\\Autolib\\Autolib.csproj",
+      "packagesPath": "C:\\Users\\romai\\.nuget\\packages\\",
+      "outputPath": "D:\\A les docs de Romain\\Superieur\\Semestre 5\\isi c#\\Autolib\\Autolib\\Autolib\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Tim\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\romai\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5512,7 +5512,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
       }
     }
   }
