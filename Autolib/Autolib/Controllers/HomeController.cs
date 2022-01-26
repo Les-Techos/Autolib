@@ -23,16 +23,20 @@ namespace Autolib.Controllers
 
         public IActionResult Index()
         {
-            List<Station> stations = null;
+            ServiceClient sc = ServiceClient.getInstance();
+            ServiceVehicule sv = ServiceVehicule.getInstance();
+            ServiceStation st = ServiceStation.getInstance();
             try
             {
-                stations = ServiceStation.getInstance().GetStations();
-
-            }catch(Exception e)
+                //int success = sv.utilise(sc.GetClient(3), sv.GetVehicule(2), new DateTime(2022, 01, 28), st.GetStation(1), st.GetStation(2));
+                sv.rend(sc.GetClient(3), sv.GetVehicule(2));
+            }
+            catch(Exception e)
             {
                 ModelState.AddModelError("Erreur", "Echec de la récupération d'un vehicule" + e.Message);
             }
-            return View(stations);
+
+            return View(); // View(stations);
         }
 
         public IActionResult Privacy()

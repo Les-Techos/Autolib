@@ -26,7 +26,7 @@ namespace Autolib.Models.Dao
         {
             try
             {
-                var stations = (from station in context.Station
+                var stations = (from station in context.Stations
                        select station);
                 return stations.ToList<Station>();
             }
@@ -36,14 +36,14 @@ namespace Autolib.Models.Dao
             }
         }
 
-        public Vehicule GetStation(int id)
+        public Station GetStation(int id)
         {
-            Vehicule vec = null;
+            Station vec = null;
 
             try
             {
-                vec = (from v in context.Vehicule
-                              where v.IdVehicule == id
+                vec = (from v in context.Stations
+                              where v.IdStation == id
                               select v).FirstOrDefault();
                 return vec;
             }catch(Exception e)
