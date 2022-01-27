@@ -18,21 +18,18 @@ namespace Autolib.Models.Dao
                 ServiceUtilise.instance = new ServiceUtilise();
                 ServiceUtilise.context = new autolibContext();
             }
-
             return ServiceUtilise.instance;
         }
 
-        //Retourne la réservation faite par c pour v au moment dateplot
         public Utilise GetUtilise(Vehicule v, Client c)
         {
             Utilise vec = null;
 
             try
             {
-                vec = (from r in context.Utilises
-                       where r.Client == c.IdClient && r.Vehicule == v.IdVehicule
-                       select r).FirstOrDefault();
-
+                vec = (from u in context.Utilises
+                       where u.Client == c.IdClient && u.Vehicule == v.IdVehicule
+                       select u).FirstOrDefault();
                 return vec;
             }
             catch (Exception e)

@@ -8,7 +8,7 @@ namespace Autolib.Models.Dao
 {
     public class ServiceVehicule
     {
-        private ServiceReservation s_resa = ServiceReservation.getInstance();
+        //private ServiceReservation s_resa = ServiceReservation.getInstance();
         private ServiceUtilise s_utilise = ServiceUtilise.getInstance();
         private static ServiceVehicule instance;
         private static autolibContext context;

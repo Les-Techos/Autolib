@@ -33,6 +33,7 @@ namespace Autolib.Controllers
             }
             catch(Exception e)
             {
+                Console.WriteLine(e.Message);
                 ModelState.AddModelError("Erreur", "Echec de la récupération d'un vehicule" + e.Message);
             }
 
