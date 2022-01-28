@@ -95,5 +95,33 @@ namespace Autolib.Models.Dao
             }
             return res;
         }
+
+        public Dictionary<Station, List<Vehicule>> getVehiculesLibresStations()
+        {
+            Dictionary<Station, List<Vehicule>> res = new Dictionary<Station, List<Vehicule>>();
+
+            List<Station> stations = GetStations();
+
+            foreach (Station s in stations)
+            {
+                res.Add(s, getVehiculesLibre(s));
+            }
+
+            return res;
+        }
+
+        public Dictionary<Station, int> getNombreDeBornesDispoStations()
+        {
+            Dictionary<Station, int> res = new Dictionary<Station, int>();
+
+            List<Station> stations = GetStations();
+
+            foreach (Station s in stations)
+            {
+                res.Add(s, getPlacesDisponibles(s));
+            }
+
+            return res;
+        }
     }
 }
