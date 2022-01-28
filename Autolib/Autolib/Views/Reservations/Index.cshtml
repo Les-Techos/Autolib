@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Autolib.Models.Domain.Reservation>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DateEcheance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehiculeNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateEcheance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientNavigation.Login)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehiculeNavigation.Disponibilite)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

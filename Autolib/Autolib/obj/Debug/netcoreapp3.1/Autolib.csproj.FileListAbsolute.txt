@@ -284,3 +284,8 @@ D:\A les docs de Romain\Superieur\Semestre 5\isi c#\Autolib\Autolib\Autolib\Auto
 D:\A les docs de Romain\Superieur\Semestre 5\isi c#\Autolib\Autolib\Autolib\Autolib\obj\Debug\netcoreapp3.1\Razor\Views\Clients\Details.cshtml.g.cs
 D:\A les docs de Romain\Superieur\Semestre 5\isi c#\Autolib\Autolib\Autolib\Autolib\obj\Debug\netcoreapp3.1\Razor\Views\Clients\Edit.cshtml.g.cs
 D:\A les docs de Romain\Superieur\Semestre 5\isi c#\Autolib\Autolib\Autolib\Autolib\obj\Debug\netcoreapp3.1\Razor\Views\Clients\Index.cshtml.g.cs
+D:\A les docs de Romain\Superieur\Semestre 5\isi c#\Autolib\Autolib\Autolib\Autolib\obj\Debug\netcoreapp3.1\Razor\Views\Reservations\Create.cshtml.g.cs
+D:\A les docs de Romain\Superieur\Semestre 5\isi c#\Autolib\Autolib\Autolib\Autolib\obj\Debug\netcoreapp3.1\Razor\Views\Reservations\Delete.cshtml.g.cs
+D:\A les docs de Romain\Superieur\Semestre 5\isi c#\Autolib\Autolib\Autolib\Autolib\obj\Debug\netcoreapp3.1\Razor\Views\Reservations\Details.cshtml.g.cs
+D:\A les docs de Romain\Superieur\Semestre 5\isi c#\Autolib\Autolib\Autolib\Autolib\obj\Debug\netcoreapp3.1\Razor\Views\Reservations\Edit.cshtml.g.cs
+D:\A les docs de Romain\Superieur\Semestre 5\isi c#\Autolib\Autolib\Autolib\Autolib\obj\Debug\netcoreapp3.1\Razor\Views\Reservations\Index.cshtml.g.cs
