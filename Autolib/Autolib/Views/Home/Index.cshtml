@@ -27,16 +27,16 @@
 		// Nous définissons le dossier qui contiendra les marqueurs
 		@if (Model != null)
 {
-    @foreach (var st in Model)
+    @foreach (var st in Model.stations)
     {
 		@:var element = {};
 		@:element.id = "ID : @st.IdStation";
-		@:element.Adresse = "Adresse : @st.Adresse";
-		@:element.Numero = "Numéro : @st.Numero";
-		@:element.Ville = "Ville : @st.Ville";
-		@: element.CodePostal = "Code Postal : @st.CodePostal";
+		@:element.Adresse = "Adresse : @st.Numero @st.Adresse @st.Ville @st.CodePostal";
 		@:element.lat = @double.Parse(@st.Latitude.ToString(), new System.Globalization.CultureInfo("en-US")) /1000000;
 		@:element.lon = @double.Parse(@st.Longitude.ToString(), new System.Globalization.CultureInfo("en-US")) /1000000;
+        @:element.Vehc = "Nombre de véhicules disponibles : @Model.nbVechDispo[st].Count";
+        @:element.nbVehc = @Model.nbVechDispo[st].Count;
+        @:element.nbBornes = "Nombre de bornes disponibles : @Model.nbBornesDispo[st]";
         @:stations.push(element );
 
 	}
@@ -67,22 +67,23 @@
             markers.push(marker);
         });
         }
-        
+
         for (station in stations) {
             var latlng = {};
             latlng.lat = stations[station].lat;
             latlng.lng = stations[station].lon;
             var buttonPopup = "";
-            buttonPopup += stations[station].id + "<br/>" + stations[station].Adresse + "<br/>" + stations[station].Numero + "<br/>" + stations[station].Ville + "<br/>" + stations[station].CodePostal;
-            buttonPopup += '<form method="POST" action="/Reservations"><input type = "hidden" id = "numeroStation" name = "numeroStation" value = '+ station.id + ' /><input type="submit" class="btn btn-primary" id="Reserve" name="Reserve" value="Réserver une auto ici" /></form > ';
-            
+            buttonPopup += stations[station].id + "<br/>" + stations[station].Adresse + "<br/>" + stations[station].Vehc + "<br/>" + stations[station].nbBornes + "<br/>";
+            if (stations[station].nbVehc > 0) {
+                buttonPopup += '<form method="POST" action="/Reservations"><input type = "hidden" id = "numeroStation" name = "numeroStation" value = ' + station.id + ' /><input type="submit" class="btn btn-primary" id="Reserve" name="Reserve" value="Réserver une auto ici" /></form > ';
+            }
             var marker = new L.Marker.SVGMarker(latlng, { iconOptions: { color: "rgb(0,158,224)", fillOpacity: 1 } });; // pas de addTo(macarte), l'affichage sera géré par la bibliothèque des clusters
             var popup = L.popup().setContent(buttonPopup);
 			marker.bindPopup(popup);
 			markerClusters.addLayer(marker); // Nous ajoutons le marqueur aux groupes
 			markers.push(marker); // Nous ajoutons le marqueur à la liste des marqueurs
 		}
-        
+
 		var group = new L.featureGroup(markers); // Nous créons le groupe des marqueurs pour adapter le zoom
 		macarte.fitBounds(group.getBounds().pad(0.5)); // Nous demandons à ce que tous les marqueurs soient visibles, et ajoutons un padding (pad(0.5)) pour que les marqueurs ne soient pas coupés
 		macarte.addLayer(markerClusters);

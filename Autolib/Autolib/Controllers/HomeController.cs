@@ -1,6 +1,7 @@
 ﻿using Autolib.Models;
 using Autolib.Models.Dao;
 using Autolib.Models.Domain;
+using Autolib.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -23,16 +24,17 @@ namespace Autolib.Controllers
 
         public IActionResult Index()
         {
-            List<Station> stations = null;
+            HomeModel hmDatas = null;
             try
             {
-                stations = ServiceStation.getInstance().GetStations();
+                ServiceStation st = ServiceStation.getInstance();
+                hmDatas = new HomeModel(st.GetStations(), st.getVehiculesLibresStations(), st.getNombreDeBornesDispoStations());
 
             }catch(Exception e)
             {
                 ModelState.AddModelError("Erreur", "Echec de la récupération d'un vehicule" + e.Message);
             }
-            return View(stations);
+            return View(hmDatas);
         }
 
         public IActionResult Privacy()
