@@ -68,5 +68,32 @@ namespace Autolib.Models.Dao
             }
             return res;
         }
+
+        public List<Vehicule> getVehiculesLibre(Station s)
+        {
+            List<Vehicule> res = null;
+
+            try
+            {
+                res = (from vec in context.Vehicules
+                             join borne in context.Bornes on vec.IdVehicule equals borne.IdVehicule
+                             where vec.Disponibilite == "LIBRE" && borne.Station == s.IdStation
+                             select vec).ToList<Vehicule>();
+
+                var temp2 = (from vec in context.Vehicules
+                             join resa in context.Reservations on vec.IdVehicule equals resa.Vehicule
+                             where resa.DateReservation < DateTime.Now && resa.DateEcheance > DateTime.Now
+                             select vec).ToList<Vehicule>();
+
+                foreach(Vehicule v in temp2){
+                    res.Remove(v);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            return res;
+        }
     }
 }

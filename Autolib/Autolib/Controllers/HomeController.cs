@@ -31,15 +31,15 @@ namespace Autolib.Controllers
             {
                 //sv.rend(sc.GetClient(6), sv.GetVehicule(4));
 
-                //var resas = sr.getReservations(sc.GetClient(4), new DateTime(2022, 02, 23), new DateTime(2022, 02, 24)); if(resas.Count == 1) sr.annule_resa(resas[0]);
+                var resas = sr.getReservations(sc.GetClient(6), DateTime.Now, DateTime.Now); if(resas.Count == 1) sr.annule_resa(resas[0]);
                 int res = 0;
-
-                res = st.getPlacesDisponibles(st.GetStation(2));
-
+                //res = sv.utilise(sc.GetClient(7), sv.GetVehicule(3), new DateTime(2022, 02, 28, 18, 36, 0, 0), st.GetStation(1), st.GetStation(2));
+                //res = st.getPlacesDisponibles(st.GetStation(2));
+                var bugg = st.getVehiculesLibre(st.GetStation(2));
                 //res = sr.reserve(sc.GetClient(4), sv.GetVehicule(6), new DateTime(2022, 02, 23), new DateTime(2022, 02, 25));
 
-                //res = sv.utilise(sc.GetClient(6), sv.GetVehicule(4), new DateTime(2022, 02, 28, 18, 36, 0, 0), st.GetStation(1), st.GetStation(2));
                 
+
                 res = res;
             }
             catch(Exception e)
