@@ -51,5 +51,22 @@ namespace Autolib.Models.Dao
                 throw new Exception(e.Message);
             }
         }
+    
+        public int getPlacesDisponibles(Station s)
+        {
+            int res = 0;
+
+            try
+            {
+                res = (from borne in context.Bornes
+                 where borne.Station == s.IdStation && borne.EtatBorne == true
+                 select borne).ToList<Borne>().Count();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            return res;
+        }
     }
 }
