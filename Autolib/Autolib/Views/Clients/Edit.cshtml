@@ -1,5 +1,5 @@
 ﻿@model Autolib.Models.Domain.Client
-
+@using Microsoft.AspNetCore.Http;
 @{
     ViewData["Title"] = "Edit";
 }
@@ -20,13 +20,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Paswd" class="control-label"></label>
-                <input asp-for="Paswd" class="form-control" />
+                <input asp-for="Paswd" class="form-control" value="" />
                 <span asp-validation-for="Paswd" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Salt" class="control-label"></label>
-                <input asp-for="Salt" class="form-control" />
-                <span asp-validation-for="Salt" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Nom" class="control-label"></label>
@@ -47,6 +42,12 @@
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+        @if (Context.Session.GetInt32("id") > 0)
+        {
+            <a href="@Url.Action("Delete", "Clients", new { id = Context.Session.GetInt32("id") })">
+                <li class="list-group-item"><button id="submit" name="delete" class="btn btn-danger"> Supprimer </button></li>
+            </a>
+        }
     </div>
 </div>
 
