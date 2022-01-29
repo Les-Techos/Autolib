@@ -26,21 +26,22 @@
 		var markers = []; // Nous initialisons la liste des marqueurs
 		// Nous définissons le dossier qui contiendra les marqueurs
 		@if (Model != null)
-{
-    @foreach (var st in Model.stations)
-    {
-		@:var element = {};
-		@:element.id = "ID : @st.IdStation";
-		@:element.Adresse = "Adresse : @st.Numero @st.Adresse @st.Ville @st.CodePostal";
-		@:element.lat = @double.Parse(@st.Latitude.ToString(), new System.Globalization.CultureInfo("en-US")) /1000000;
-		@:element.lon = @double.Parse(@st.Longitude.ToString(), new System.Globalization.CultureInfo("en-US")) /1000000;
-        @:element.Vehc = "Nombre de véhicules disponibles : @Model.nbVechDispo[st].Count";
-        @:element.nbVehc = @Model.nbVechDispo[st].Count;
-        @:element.nbBornes = "Nombre de bornes disponibles : @Model.nbBornesDispo[st]";
-        @:stations.push(element );
+        {
+            @foreach (var st in Model.stations)
+            {
+		        @:var element = {};
+		        @:element.id = "ID : @st.IdStation";
+		        @:element.idNb = @st.IdStation;
+		        @:element.Adresse = "Adresse : @st.Numero @st.Adresse @st.Ville @st.CodePostal";
+		        @:element.lat = @double.Parse(@st.Latitude.ToString(), new System.Globalization.CultureInfo("en-US")) /1000000;
+		        @:element.lon = @double.Parse(@st.Longitude.ToString(), new System.Globalization.CultureInfo("en-US")) /1000000;
+                @:element.Vehc = "Nombre de véhicules disponibles : @Model.nbVechDispo[st].Count";
+                @:element.nbVehc = @Model.nbVechDispo[st].Count;
+                @:element.nbBornes = "Nombre de bornes disponibles : @Model.nbBornesDispo[st]";
+                @:stations.push(element );
 
-	}
-}
+	        }
+        }
 		var iconBase = 'http://localhost/carte/icons/';
 		// Créer l'objet "macarte" et l'insèrer dans l'élément HTML qui a l'ID "map"
 		macarte = L.map('map').setView([lat, lon], 11);
@@ -75,7 +76,7 @@
             var buttonPopup = "";
             buttonPopup += stations[station].id + "<br/>" + stations[station].Adresse + "<br/>" + stations[station].Vehc + "<br/>" + stations[station].nbBornes + "<br/>";
             if (stations[station].nbVehc > 0) {
-                buttonPopup += '<form method="POST" action="/Reservations"><input type = "hidden" id = "numeroStation" name = "numeroStation" value = ' + station.id + ' /><input type="submit" class="btn btn-primary" id="Reserve" name="Reserve" value="Réserver une auto ici" /></form > ';
+                buttonPopup += '<form method="POST" action="/Reservations"><input type = "hidden" id = "numeroStation" name = "numeroStation" value = "' + stations[station].idNb + '" /><input type="submit" class="btn btn-primary" id="Reserve" name="Reserve" value="Réserver une auto ici" /></form > ';
             }
             var marker = new L.Marker.SVGMarker(latlng, { iconOptions: { color: "rgb(0,158,224)", fillOpacity: 1 } });; // pas de addTo(macarte), l'affichage sera géré par la bibliothèque des clusters
             var popup = L.popup().setContent(buttonPopup);

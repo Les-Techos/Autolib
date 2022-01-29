@@ -1,11 +1,99 @@
-﻿@model IEnumerable<Autolib.Models.Domain.Reservation>
+﻿
 
 @{
-    ViewData["Title"] = "Index";
+ViewData["Title"] = "Réserver un véhicule";
 }
 
-<h1>Index</h1>
+<script type="text/javascript">
+    var bornes = bornes || [];
+    var typesVehicules = typesVehicules || [];
+    function initDatas() {
 
+                @if (Model != null)
+                {
+                    @foreach (var borne in Model.bornes)
+                    {
+                        @: bornes[@borne.IdVehicule] = @borne.IdBorne
+                    }
+                    @foreach (var type in Model.types)
+                    {
+		                 @:var element = {}
+                        @:element.categorie = " @type.Categorie";
+                        @:element.typeVehicule = "@type.TypeVehicule1";
+                        @: typesVehicules[@type.IdTypeVehicule] = element;
+	                }
+                } 
+    }
+           
+    
+</script>
+<div>
+    <table class="table">
+        
+        <thead>
+            <script>initDatas();  </script>
+            <tr>
+                <th>
+                    Borne
+                </th>
+                <th>
+                    Vehicule
+                </th>
+                <th>
+                    Catégorie
+                </th>
+                <th>
+                    Modèle du Véhicule
+                </th>
+                <th>
+                    Batterie
+                </th>
+                <th>
+                    Disponbilité
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        @if (Model != null)
+        {
+            @foreach (var car in Model.voitures)
+            {
+    <tr>
+        <td>
+            <script> 
+                document.write(bornes[@car.IdVehicule])</script>
+        </td>
+        <td>
+            @car.IdVehicule
+        </td>
+        <td>
+            <script> document.write(typesVehicules[@car.TypeVehicule].categorie)</script>
+        </td>
+        <td>
+            <script> document.write(typesVehicules[@car.TypeVehicule].typeVehicule)</script>
+        </td>
+        <td>
+            @car.EtatBatterie
+        </td>
+        <td>
+            @car.Disponibilite
+        </td>
+        <td>
+            <script>
+                if ("@car.Disponibilite" == "LIBRE") {
+                    document.write('<form method="POST" action="@Url.Action("Etape2", "Reservations")"><input type="hidden" name="idCar" id="idCar" value ="@car.IdVehicule" /><input type="submit" class="btn btn-validate" name="reserv" id="reserv" value="Réserver cette voiture" /></form >')
+                }</script>
+            
+        </td>
+    </tr>
+
+            }
+        }
+    </table>
+</div>
+
+
+<!--
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -13,35 +101,37 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DateEcheance)
+                 //Html.DisplayNameFor(model => model.DateEcheance)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ClientNavigation)
+                 //Html.DisplayNameFor(model => model.ClientNavigation)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.VehiculeNavigation)
+                 //Html.DisplayNameFor(model => model.VehiculeNavigation)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateEcheance)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClientNavigation.Login)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VehiculeNavigation.Disponibilite)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        //foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    //Html.DisplayFor(modelItem => item.DateEcheance)
+                </td>
+                <td>
+                     //Html.DisplayFor(modelItem => item.ClientNavigation.Login)
+                </td>
+                <td>
+                     //Html.DisplayFor(modelItem => item.VehiculeNavigation.Disponibilite)
+                </td>
+                <td>
+                     //Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                     //Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                     //Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+    -->

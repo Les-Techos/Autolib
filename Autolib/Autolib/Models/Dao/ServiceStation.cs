@@ -69,6 +69,23 @@ namespace Autolib.Models.Dao
             return res;
         }
 
+        public List<Borne> getPlacesAvecVehc(Station s)
+        {
+            List<Borne> res = null;
+
+            try
+            {
+                res = (from borne in context.Borne
+                       where borne.Station == s.IdStation && borne.EtatBorne == false
+                       select borne).ToList<Borne>();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            return res;
+        }
+
         public List<Vehicule> getVehiculesLibre(Station s)
         {
             List<Vehicule> res = null;
@@ -119,6 +136,23 @@ namespace Autolib.Models.Dao
             foreach (Station s in stations)
             {
                 res.Add(s, getPlacesDisponibles(s));
+            }
+
+            return res;
+        }
+        
+        public List<TypeVehicule> getTypesVehiculesStations()
+        {
+            List<TypeVehicule> res = null;
+
+            try
+            {
+                res = (from TypeVehicule in context.TypeVehicule
+                 select TypeVehicule).ToList<TypeVehicule>();
+                
+            }catch (Exception e)
+            {
+                throw new Exception(e.Message);
             }
 
             return res;

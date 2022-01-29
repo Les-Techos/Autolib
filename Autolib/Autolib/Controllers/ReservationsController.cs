@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Autolib.Models.Domain;
+using Autolib.Models.Dao;
+using Autolib.Models.ViewModel;
 
 namespace Autolib.Controllers
 {
@@ -21,8 +23,37 @@ namespace Autolib.Controllers
         // GET: Reservations
         public async Task<IActionResult> Index()
         {
-            var autolibContext = _context.Reservation.Include(r => r.ClientNavigation).Include(r => r.VehiculeNavigation);
-            return View(await autolibContext.ToListAsync());
+            ReservationModel Reserv = null;
+            try
+            {
+
+                // on récupère les données du formulaire
+                int numS = Int32.Parse(Request.Form["numeroStation"]);
+                ServiceStation st = ServiceStation.getInstance();
+                Station laStation = st.GetStation(numS);
+                Reserv = new ReservationModel(st.getVehiculesLibre(laStation), st.getPlacesAvecVehc(laStation), st.getTypesVehiculesStations());
+                return View(Reserv);
+            }catch(Exception e)
+            {
+                ModelState.AddModelError("Erreur", "Erreur lors du chargement de la page : " + e.Message);
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public async Task<IActionResult> Etape2()
+        {
+            try
+            {
+
+                // on récupère les données du formulaire
+                int numCar = Int32.Parse(Request.Form["idCar"]);
+                return View(numCar);
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("Erreur", "Erreur lors du chargement de la page : " + e.Message);
+                return RedirectToAction("Index", "Reservations");
+            }
         }
 
         // GET: Reservations/Details/5
