@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Autolib.Models.Domain;
 using Autolib.Models.Dao;
+using Microsoft.AspNetCore.Http;
 
 namespace Autolib.Controllers
 {
@@ -127,6 +128,8 @@ namespace Autolib.Controllers
                 return NotFound();
             }
 
+            HttpContext.Session.SetString("nom", "");
+            HttpContext.Session.SetInt32("id", 0);
             return View(client);
         }
 

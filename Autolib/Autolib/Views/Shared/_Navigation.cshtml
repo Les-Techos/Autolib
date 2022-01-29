@@ -16,10 +16,6 @@
                      <li class="nav-item">
                          <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                      </li>-->
-                    @if (Context.Session.GetInt32("id") == null)
-                    {
-                        <li><a class="dropdown-item" asp-area="Connexion" asp-controller="Connexion" asp-action="Index">Connexion</a></li>
-                    }
 
                     @if (Context.Session.GetInt32("id") > 0)
                     {
@@ -27,6 +23,10 @@
                         <li><a class="dropdown-item" asp-area="Connexion" asp-controller="Connexion" asp-action="Index">Quitter</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a class="dropdown-item" href="@Url.Action("Details","Clients", new { id = Context.Session.GetInt32("id")})">Espace Client</a></li>
+                    }
+                    else
+                    {
+                        <li><a class="dropdown-item" asp-area="Connexion" asp-controller="Connexion" asp-action="Index">Connexion</a></li>
                     }
                 </ul>
             </div>

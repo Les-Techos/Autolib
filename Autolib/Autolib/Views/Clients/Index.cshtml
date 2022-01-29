@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<Autolib.Models.Domain.Client>
-
+@using Microsoft.AspNetCore.Http;
 @{
     ViewData["Title"] = "Index";
 }
@@ -10,18 +10,24 @@
             <div class="card">
                 <div class="card-body">
                     <h5>Informations du compte</h5>
-                    <form method="post" action="">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Nom : <input type="text" id="nom" name="nom" class="form-control" value="<?=$controllerData[" nom"]?>"  required/></li>
-                            <li class="list-group-item">Prénom : <input type="text" id="prenom" name="prenom" class="form-control" value="<?=$controllerData[" prenom"]?>"  required/></li>
-                            <li class="list-group-item">Login : <input type="text" id="username" name="username" class="form-control" value="<?=$controllerData[" username"] ?>" required/></li>
-                            <li class="list-group-item">Mot de Passe : <input type="password" name="password" id="password" class="form-control" placeholder="Nouveau mot de passe" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 6 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;"></li>
-                            <li class="list-group-item"><input type="password" name="cpassword" id="cpassword" class="form-control" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" placeholder="Répétez le mot de passe"></li>
+                    <ul class="list-group list-group-flush">
+                        <form method="post" action="">
 
-                            <li class="list-group-item"><input type="submit" id="submit" name="modify" class="btn btn-validate" value="Modifier" /></li>
-                            <li class="list-group-item"><input type="submit" id="submit" name="delete" class="btn btn-danger" value="Supprimer" /></li>
-                        </ul>
-                    </form>
+                        <li class="list-group-item">Nom : <input type="text" id="nom" name="nom" class="form-control" value="<?=$controllerData[" nom"]?>"  required/></li>
+                        <li class="list-group-item">Prénom : <input type="text" id="prenom" name="prenom" class="form-control" value="<?=$controllerData[" prenom"]?>"  required/></li>
+                        <li class="list-group-item">Login : <input type="text" id="username" name="username" class="form-control" value="<?=$controllerData[" username"] ?>" required/></li>
+                        <li class="list-group-item">Mot de Passe : <input type="password" name="password" id="password" class="form-control" placeholder="Nouveau mot de passe" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 6 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;"></li>
+                        <li class="list-group-item"><input type="password" name="cpassword" id="cpassword" class="form-control" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" placeholder="Répétez le mot de passe"></li>
+
+                        <li class="list-group-item"><input type="submit" id="submit" name="modify" class="btn btn-validate" value="Modifier" /></li>
+
+                        </form>
+                        @if (Context.Session.GetInt32("id") > 0)
+                        {
+                            <a href="@Url.Action("Delete", "Clients", new { id = Context.Session.GetInt32("id") })">
+                            <li class="list-group-item"><button id="submit" name="delete" class="btn btn-danger" > Supprimer </button></li></a>
+                        }
+                    </ul>
                 </div>
             </div>
         </div>
@@ -68,32 +74,33 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Login)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Paswd)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Salt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Prenom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateNaissance)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.IdClient">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.IdClient">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.IdClient">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Login)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Paswd)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Salt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prenom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateNaissance)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdClient">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.IdClient">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IdClient">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
