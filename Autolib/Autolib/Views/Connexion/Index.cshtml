@@ -14,7 +14,7 @@
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-signin" role="tabpanel" aria-labelledby="pills-signin-tab">
             <div class="col-sm-12 border border-primary shadow rounded pt-2" id="card-signin">
-                <form method="post" id="singninFrom">
+                <form method="post" id="singninFrom" action="@Url.Action("Controle", "Connexion")">
                     <div class="form-group">
                         <label class="font-weight-bold">identifiant <span class="text-danger">*</span></label>
                         <input type="texte" name="username" id="username" class="form-control" placeholder="Rentrer votre identifiant" required>
@@ -31,22 +31,22 @@
         </div>
         <div class="tab-pane fade" id="pills-signup" role="tabpanel" aria-labelledby="pills-signup-tab">
             <div class="col-sm-12 border border-primary shadow rounded pt-2" id="card-signin">
-                <form method="post" id="singnupFrom" action="@Url.Action("Controle", "Connexion")">
+                <form method="post" id="singnupFrom" action="@Url.Action("Create","Clients")">
                     <div class="form-group">
                         <label class="font-weight-bold">Prénom <span class="text-danger">*</span></label>
-                        <input type="text" name="signupforname" id="signupforname" class="form-control" placeholder="Prénom" required onkeypress="return(testString(event));">
+                        <input type="text" for="Prenom" name="signupforname" id="signupforname" class="form-control" placeholder="Prénom" required onkeypress="return(testString(event));">
                     </div>
                     <div class="form-group">
                         <label class="font-weight-bold">Nom <span class="text-danger">*</span></label>
-                        <input type="text" name="signupname" id="signupname" class="form-control" placeholder="nom" required onkeypress="return(testString(event));">
+                        <input type="text" for="Nom" name="signupname" id="signupname" class="form-control" placeholder="nom" required onkeypress="return(testString(event));">
                     </div>
                     <div class="form-group">
                         <label class="font-weight-bold">Nom d'utilisateur <span class="text-danger">*</span></label>
-                        <input type="text" name="signupusername" id="signupusername" class="form-control" placeholder="Choississez votre identifiant" required>
+                        <input type="text" for="Login" name="signupusername" id="signupusername" class="form-control" placeholder="Choississez votre identifiant" required>
                         <div class="text-danger"><em>Ce sera votre identifiant de connexion !</em></div>
                     <div class="form-group">
                         <label class="font-weight-bold">Mot de passe<span class="text-danger">*</span></label>
-                        <input type="password" name="signuppassword" id="signuppassword" class="form-control" placeholder="***********" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 6 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;" required>
+                        <input type="password" for="Paswd" name="signuppassword" id="signuppassword" class="form-control" placeholder="***********" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 6 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;" required>
                     </div>
                     <div class="form-group">
                         <label class="font-weight-bold">Confirmer votre Mot de passe<span class="text-danger">*</span></label>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Autolib.Models.Domain;
+using Autolib.Models.Dao;
 
 namespace Autolib.Controllers
 {
@@ -42,26 +43,22 @@ namespace Autolib.Controllers
             return View(client);
         }
 
-        // GET: Clients/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         // POST: Clients/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdClient,Login,Paswd,Salt,Nom,Prenom,DateNaissance")] Client client)
+        public ActionResult Create()
         {
+            Console.WriteLine("JE SUIS LA");
+            Client c = new Client();
             if (ModelState.IsValid)
             {
-                _context.Add(client);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                c.Login = Request.Form["signupusername"]; c.Paswd = Request.Form["signuppassword"]; c.Nom = Request.Form["signupname"]; c.Prenom = Request.Form["signupforname"];
+                c.DateNaissance = DateTime.Now;
+                ServiceClient.getInstance().InsertClient(c);
+                return RedirectToAction("Index", "Home");
             }
-            return View(client);
+            return View(c);
         }
 
         // GET: Clients/Edit/5

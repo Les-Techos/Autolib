@@ -92,7 +92,7 @@ namespace Autolib.Models.Dao
             }
         }
 
-        public void InsertClient(Client c)
+        public int InsertClient(Client c)
         {
             Byte[] selmdp = MonMotPassHash.GenerateSalt();
             Byte[] mdpByte = MonMotPassHash.PasswordHashe(c.Paswd, selmdp);
@@ -109,6 +109,7 @@ namespace Autolib.Models.Dao
                 Console.WriteLine(e);
                 // Provide for exceptions.
             }
+            return 0;
         }
 
         public bool CheckClient(String login, String pwd)

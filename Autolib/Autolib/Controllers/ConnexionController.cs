@@ -93,8 +93,8 @@ namespace Autolib.Controllers
             try
             {
                 // on récupère les données du formulaire
-                String login = Request.Form["login"];
-                String mdp = Request.Form["pwd"];
+                String login = Request.Form["username"];
+                String mdp = Request.Form["password"];
                 try
                 {
 
