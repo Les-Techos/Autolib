@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Autolib.Models.Domain;
 using Autolib.Models.Dao;
+using Microsoft.AspNetCore.Http;
 
 namespace Autolib.Controllers
 {
@@ -93,8 +94,13 @@ namespace Autolib.Controllers
             {
                 try
                 {
-                    _context.Update(client);
-                    await _context.SaveChangesAsync();
+                    Client c = ServiceClient.getInstance().GetClient(client.IdClient);
+                    c.Login = client.Login;
+                    c.Paswd = client.Paswd;
+                    c.Nom = client.Nom;
+                    c.Prenom = client.Prenom;
+                    c.DateNaissance = client.DateNaissance;
+                    ServiceClient.getInstance().UpdateClient(c);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -127,7 +133,9 @@ namespace Autolib.Controllers
                 return NotFound();
             }
 
-            return View(client);
+            HttpContext.Session.SetString("nom", "");
+            HttpContext.Session.SetInt32("id", 0);
+            return RedirectToAction("Index", "Home");
         }
 
         // POST: Clients/Delete/5

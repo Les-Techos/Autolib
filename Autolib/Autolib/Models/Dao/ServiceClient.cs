@@ -74,11 +74,12 @@ namespace Autolib.Models.Dao
         public void UpdateClient(Client c)
         {
             // Query the database for the row to be updated.
-            Client clientDB = GetClient(c.IdClient);
-
+            Byte[] selmdp = MonMotPassHash.GenerateSalt();
+            Byte[] mdpByte = MonMotPassHash.PasswordHashe(c.Paswd, selmdp);
+            c.Paswd = MonMotPassHash.BytesToString(mdpByte);
+            c.Salt = MonMotPassHash.BytesToString(selmdp);
             // Execute the query, and change the column values
             // you want to change.
-            clientDB = c;
 
             // Submit the changes to the database.
             try
