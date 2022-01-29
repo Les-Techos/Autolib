@@ -18,8 +18,8 @@
                             <li class="list-group-item">Mot de Passe : <input type="password" name="password" id="password" class="form-control" placeholder="Nouveau mot de passe" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 6 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;"></li>
                             <li class="list-group-item"><input type="password" name="cpassword" id="cpassword" class="form-control" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" placeholder="Répétez le mot de passe"></li>
 
-                            <li class="list-group-item"><input type="submit" id="submit" name="modify" class="btn btn-validate" value="Modifier" /></li>
-                            <li class="list-group-item"><input type="submit" id="submit" name="delete" class="btn btn-danger" value="Supprimer" /></li>
+                            <li class="list-group-item"><input type="submit" id="submit" name="modify" class="btn btn-validate btn-block" value="Modifier" /></li>
+                            <li class="list-group-item"><input type="submit" id="submit" name="delete" class="btn btn-danger btn-block" value="Supprimer" /></li>
                         </ul>
                     </form>
                 </div>

@@ -1,6 +1,77 @@
 ﻿@{
-ViewData["Title"] = "Réserver un véhicule - étape 2";
+    ViewData["Title"] = "Réserver un véhicule - étape 2";
 }
 
-<h1>bienvenu à l'étape 2 ma race !</h1>
-@Model
+
+
+
+<div class="selectVehc">
+    <h1>Vous avez sélectionné le véhicule suivant : @Model.typeVehc</h1>
+    <h2>Sélectionnez un horaire</h2>
+    <br />
+    <br />
+    <div class="selectVehc">
+        <form method="POST" action="@Url.Action("Validation", "Reservations")">
+
+            <input type="hidden" name ="nbCar" id="nbCar" value="@Model.numVehc" />
+            <input type="hidden" name ="idCar" id="idCar" value="@Model.typeVehc" />
+            <label for="debut">Date et heure de début de location</label> <br />
+
+            <input type="datetime-local" id="debut"
+                   name="debut">
+            <br />
+            <label for="debut">Date et heure de fin de location</label> <br />
+
+            <input type="datetime-local" id="fin"
+                   name="fin">
+            <br />
+            <br />
+            <input type="submit" class="btn btn-validate btn-block" />
+        </form>
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    Date.prototype.addHours = function (h) {
+        this.setTime(this.getTime() + (h * 60 * 60 * 1000));
+        return this;
+    }
+
+    var configDebut = {
+        enableTime: true,
+        altInput: true,
+        time_24hr: true,
+
+        altFormat: "d-m-Y H:i",
+        dateFormat: "Y-m-dTH:i",
+        minDate: new Date(),
+        maxDate: new Date().fp_incr(3),
+        onChange: function (selectedDates, dateStr, instance) {
+            endPicker.set('minDate', selectedDates[0].addHours(1));
+            endPicker.set('maxDate', selectedDates[0].fp_incr(3));
+            if (selectedDates[0] == new Date().getDate) {
+                startPicker.set('minTime', new Date.getTime);
+                endPicker.set('minTime', new Date.getTime);
+            } else {
+                startPicker.set('minTime', new Date.getTime);
+                endPicker.set('minTime', 0);
+            }
+            
+        },
+    }
+    flatpickr("#debut", configDebut);
+    startPicker = flatpickr("#debut", configDebut);
+    var configFin = {
+        enableTime: true,
+        altInput: true,
+        time_24hr: true,
+        altFormat: "d-m-Y H:i",
+        dateFormat: "Y-m-dTH:i",
+        time_24hr: true,
+    }
+    endPicker = flatpickr("#fin", configFin);
+
+
+
+</script>

@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Autolib.Models.Domain;
 using Autolib.Models.Dao;
 using Autolib.Models.ViewModel;
+using Microsoft.AspNetCore.Http;
+
 
 namespace Autolib.Controllers
 {
@@ -23,6 +25,9 @@ namespace Autolib.Controllers
         // GET: Reservations
         public async Task<IActionResult> Index()
         {
+            if(HttpContext.Session.GetInt32("id") == null){
+                return RedirectToAction("Index", "Connexion");
+            }
             ReservationModel Reserv = null;
             try
             {
@@ -42,12 +47,43 @@ namespace Autolib.Controllers
 
         public async Task<IActionResult> Etape2()
         {
+            if (HttpContext.Session.GetInt32("id") == null){
+                return RedirectToAction("Index", "Connexion");
+            }
+            ReservationEtape23Model res = null;
             try
             {
 
                 // on récupère les données du formulaire
-                int numCar = Int32.Parse(Request.Form["idCar"]);
-                return View(numCar);
+                int nbCar = Int32.Parse(Request.Form["nbCar"]);
+                String idcar = Request.Form["idCar"];
+                res = new ReservationEtape23Model(nbCar, idcar);
+                return View("Etape2", res);
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("Erreur", "Erreur lors du chargement de la page : " + e.Message);
+                return RedirectToAction("Index", "Reservations");
+            }
+        }
+
+        public async Task<IActionResult> Validation()
+        {
+            if (HttpContext.Session.GetInt32("id") == null){
+                return RedirectToAction("Index", "Connexion");
+            }
+            ReservationEtape23Model res = null;
+            try
+            {
+                ServiceReservation sr = ServiceReservation.getInstance();
+                DateTime debut = DateTime.Parse(Request.Form["debut"]);
+                DateTime fin = DateTime.Parse(Request.Form["fin"]);
+                int nbCar = Int32.Parse(Request.Form["nbCar"]);
+                String idcar = Request.Form["idCar"];
+                int idClient = (int) HttpContext.Session.GetInt32("id");
+                int etatRes = sr.reserve(ServiceClient.getInstance().GetClient(idClient), ServiceVehicule.getInstance().GetVehicule(nbCar), debut, fin);
+                res = new ReservationEtape23Model(nbCar, idcar, debut, fin, etatRes);
+                return View("Validation", res);
             }
             catch (Exception e)
             {

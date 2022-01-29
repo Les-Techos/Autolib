@@ -81,7 +81,7 @@ ViewData["Title"] = "Réserver un véhicule";
         <td>
             <script>
                 if ("@car.Disponibilite" == "LIBRE") {
-                    document.write('<form method="POST" action="@Url.Action("Etape2", "Reservations")"><input type="hidden" name="idCar" id="idCar" value ="@car.IdVehicule" /><input type="submit" class="btn btn-validate" name="reserv" id="reserv" value="Réserver cette voiture" /></form >')
+                    document.write('<form method="POST" action="@Url.Action("Etape2", "Reservations")"><input type="hidden" name="nbCar" id="idCar" value ="@car.IdVehicule" /><input type="hidden" name="idCar" id="idCar" value ="'+typesVehicules[@car.TypeVehicule].typeVehicule + ' n° @car.IdVehicule" /><input type="submit" class="btn btn-validate btn-block" name="reserv" id="reserv" value="Réserver cette voiture" /></form >');
                 }</script>
             
         </td>
