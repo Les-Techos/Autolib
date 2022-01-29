@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebMangaEntity.Models.Utilitaires;
 
 namespace Autolib.Models.Dao
 {
@@ -93,6 +94,11 @@ namespace Autolib.Models.Dao
 
         public void InsertClient(Client c)
         {
+            Byte[] selmdp = MonMotPassHash.GenerateSalt();
+            Byte[] mdpByte = MonMotPassHash.PasswordHashe(c.Paswd, selmdp);
+            c.Paswd = MonMotPassHash.BytesToString(mdpByte);
+            c.Salt = MonMotPassHash.BytesToString(selmdp);
+
             context.Client.Add(c);
             try
             {
@@ -103,6 +109,23 @@ namespace Autolib.Models.Dao
                 Console.WriteLine(e);
                 // Provide for exceptions.
             }
+        }
+
+        public bool CheckClient(String login, String pwd)
+        {
+            bool res = false;
+            Client c = GetClient(login);
+            // on récupère le sel 
+            Byte[] salt = MonMotPassHash.transformeEnBytes(c.Salt);
+            // on génère le mot de passe 
+            Byte[] tempo = MonMotPassHash.transformeEnBytes(c.Paswd);
+
+            if (MonMotPassHash.VerifyPassword(salt, pwd, tempo))
+            {
+                res = true;
+            }
+
+            return res;
         }
 
         public void RemoveClient(Client c)
