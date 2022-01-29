@@ -12,6 +12,7 @@ namespace Autolib.Controllers
 {
     public class ConnexionController : Controller
     {
+        ServiceClient sc = ServiceClient.getInstance();
         // GET: ConnexionController
         public ActionResult Index()
         {
@@ -102,20 +103,10 @@ namespace Autolib.Controllers
                     {
                         try
                         {
-                            Byte[] selmdp = MonMotPassHash.GenerateSalt();
-                            Byte[] mdpByte = MonMotPassHash.PasswordHashe("secret", selmdp);
-                            String mdpS = MonMotPassHash.BytesToString(mdpByte);
-                            String saltS = MonMotPassHash.BytesToString(selmdp);
-                            String sel = unUtilisateur.Salt;
-                            // on récupère le sel 
-                            Byte[] salt = MonMotPassHash.transformeEnBytes(unUtilisateur.Salt);
-                            // on génère le mot de passe 
-                            Byte[] tempo = MonMotPassHash.transformeEnBytes(unUtilisateur.Paswd);
-                            if (MonMotPassHash.VerifyPassword(salt, mdp, tempo))
+                            if (sc.CheckClient(login, mdp))
                             {
                                 HttpContext.Session.SetInt32("id", unUtilisateur.IdClient);
                                 HttpContext.Session.SetString("nom", unUtilisateur.Nom + " " + unUtilisateur.Prenom);
-                                return RedirectToAction("Index", "Home");
                             }
                             else
                             {

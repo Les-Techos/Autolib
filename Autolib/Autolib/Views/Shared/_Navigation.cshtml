@@ -26,7 +26,7 @@
                         <li role="separator" class="divider"></li>
                         <li><a class="dropdown-item" asp-area="Connexion" asp-controller="Connexion" asp-action="Index">Quitter</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a class="dropdown-item" asp-area="Clients" asp-controller="Clients" asp-action="">Espace Client</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("Details","Clients", new { id = Context.Session.GetInt32("id")})">Espace Client</a></li>
                     }
                 </ul>
             </div>
