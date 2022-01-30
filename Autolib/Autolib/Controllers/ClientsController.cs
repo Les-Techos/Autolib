@@ -36,8 +36,7 @@ namespace Autolib.Controllers
                 return NotFound();
             }
 
-            var client = await _context.Client
-                .FirstOrDefaultAsync(m => m.IdClient == id);
+            var client = ServiceClient.getInstance().GetClient((int)id);
             if (client == null)
             {
                 return NotFound();
@@ -154,14 +153,16 @@ namespace Autolib.Controllers
                 {
                     Client c = ServiceClient.getInstance().GetClient(client.IdClient);
                     c.Login = client.Login;
-                    if(client.Paswd != null || client.Paswd!="")
+                    Boolean HashPass = false;
+                    if(client.Paswd != null && client.Paswd!="")
                     {
                         c.Paswd = client.Paswd;
-                    }                
+                        HashPass = true;
+                    }
                     c.Nom = client.Nom;
                     c.Prenom = client.Prenom;
                     c.DateNaissance = client.DateNaissance;
-                    ServiceClient.getInstance().UpdateClient(c);
+                    ServiceClient.getInstance().UpdateClient(c, HashPass);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -205,8 +206,7 @@ namespace Autolib.Controllers
             
             _context.Client.Remove(client);
             await _context.SaveChangesAsync();
-            HttpContext.Session.SetString("nom", "");
-            HttpContext.Session.SetInt32("id", 0);
+            HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
 

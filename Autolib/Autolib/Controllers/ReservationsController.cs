@@ -25,7 +25,8 @@ namespace Autolib.Controllers
         // GET: Reservations
         public async Task<IActionResult> Index()
         {
-            if(HttpContext.Session.GetInt32("id") == null){
+            if (!(HttpContext.Session.GetInt32("id") > 0))
+            {
                 return RedirectToAction("Index", "Connexion");
             }
             ReservationModel Reserv = null;
@@ -47,7 +48,8 @@ namespace Autolib.Controllers
 
         public async Task<IActionResult> Etape2()
         {
-            if (HttpContext.Session.GetInt32("id") == null){
+            if (!(HttpContext.Session.GetInt32("id") > 0))
+            {
                 return RedirectToAction("Index", "Connexion");
             }
             ReservationEtape23Model res = null;
@@ -69,7 +71,7 @@ namespace Autolib.Controllers
 
         public async Task<IActionResult> Validation()
         {
-            if (HttpContext.Session.GetInt32("id") == null){
+            if (!(HttpContext.Session.GetInt32("id")>0)){
                 return RedirectToAction("Index", "Connexion");
             }
             ReservationEtape23Model res = null;

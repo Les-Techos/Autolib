@@ -11,7 +11,7 @@
 
             <h1>Votre réservation a été effectuée !</h1><br /><br />
             <p>
-                Le véhicule @Model.typeVehc sera utilisable du @Model.debut.ToString("dd MM yyyy à HH:mm") jusqu'au @Model.fin.ToString("dd MM yyyy à HH:mm");
+                Le véhicule @Model.typeVehc sera utilisable du @Model.debut.ToString("dd MM yyyy à HH:mm") jusqu'au @Model.fin.ToString("dd MM yyyy à HH:mm")
             </p>
             <br />
             <br />
@@ -20,7 +20,7 @@
         else @if (@Model.etatRes == 1)
        {<h1>Une erreur est survenue</h1><br /><br />
         <p>
-            Le véhicule @Model.typeVehc est déjà réservé;
+            Le véhicule @Model.typeVehc est déjà réservé
         </p>
     }
     else @if (@Model.etatRes == -2)
@@ -28,7 +28,7 @@
     <h1>Une erreur est survenue</h1><br /><br />
     <p>
         Vous ne pouvez pas réserver le véhicule @Model.typeVehc car vous avez une réservation en cours sur la même période;
-        <br /> Du @Model.debut.ToString("dd MM yyyy à HH:mm") jusqu'au @Model.fin.ToString("dd MM yyyy à HH:mm");
+        <br /> Du @Model.debut.ToString("dd MM yyyy à HH:mm") jusqu'au @Model.fin.ToString("dd MM yyyy à HH:mm")
     </p>
    }
    else

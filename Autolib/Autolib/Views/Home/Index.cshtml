@@ -77,7 +77,7 @@
             var buttonPopup = "";
             buttonPopup += stations[station].id + "<br/>" + stations[station].Adresse + "<br/>" + stations[station].Vehc + "<br/>" + stations[station].nbBornes + "<br/>";
             if (stations[station].nbVehc > 0) {
-                buttonPopup += '<form method="POST" action="/Reservations"><input type = "hidden" id = "numeroStation" name = "numeroStation" value = "' + stations[station].idNb + '" /><input type="submit" class="btn btn-primary btn-block" id="Reserve" name="Reserve" value="Réserver une auto ici" /></form > ';
+                buttonPopup += '<form method="POST" action="/Reservations"><input type = "hidden" id = "numeroStation" name = "numeroStation" value = "' + stations[station].idNb + '" /><input type="submit" class="btn btn-validate btn-block" id="Reserve" name="Reserve" value="Réserver une auto ici" /></form > ';
             }
             var marker = new L.Marker.SVGMarker(latlng, { iconOptions: { color: "rgb(0,158,224)", fillOpacity: 1 } });; // pas de addTo(macarte), l'affichage sera géré par la bibliothèque des clusters
             var popup = L.popup().setContent(buttonPopup);

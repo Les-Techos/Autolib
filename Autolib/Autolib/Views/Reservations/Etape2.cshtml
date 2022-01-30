@@ -48,9 +48,10 @@
         minDate: new Date(),
         maxDate: new Date().fp_incr(3),
         onChange: function (selectedDates, dateStr, instance) {
-            endPicker.set('minDate', selectedDates[0].addHours(1));
-            endPicker.set('maxDate', selectedDates[0].fp_incr(3));
-            if (selectedDates[0] == new Date().getDate) {
+            var hour = new Date(selectedDates[0]);
+            endPicker.set('minDate', hour.addHours(1));
+            endPicker.set('maxDate', hour.fp_incr(3));
+            if (selectedDates[0].getDate() == new Date().getDate()) {
                 startPicker.set('minTime', new Date.getTime);
                 endPicker.set('minTime', new Date.getTime);
             } else {

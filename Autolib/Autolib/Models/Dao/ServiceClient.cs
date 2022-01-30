@@ -71,22 +71,17 @@ namespace Autolib.Models.Dao
             }
         }
 
-        public void UpdateClient(Client c)
+        public void UpdateClient(Client c, Boolean hashPass)
         {
             // Query the database for the row to be updated.
             Byte[] selmdp = MonMotPassHash.GenerateSalt();
-            if (!String.IsNullOrEmpty(c.Paswd)) {
+            if (hashPass) {
             Byte[] mdpByte = MonMotPassHash.PasswordHashe(c.Paswd, selmdp);
                 c.Paswd = MonMotPassHash.BytesToString(mdpByte);
             c.Salt = MonMotPassHash.BytesToString(selmdp);
                 // Execute the query, and change the column values
                 // you want to change.
-            }
-            else
-            {
-                c.Paswd = GetClient(c.IdClient).Paswd;
-            }
-            
+            }         
             
 
             // Submit the changes to the database.

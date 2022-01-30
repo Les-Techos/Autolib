@@ -43,7 +43,7 @@
                 </div>
                 <div>
                     <a class="btn btn-warning btn-block" asp-action="Edit" asp-route-id="@Model.clientActuel.IdClient">Editer les données</a>
-                    <a class="btn btn-validate btn-block" asp-action="Index">Back to List</a>
+                    <a class="btn btn-validate btn-block" href="@Url.Action("Index","Home")">Retour au menu</a>
                 </div>
             </div>
             </div>
@@ -57,21 +57,39 @@
             {
                             @foreach(var r in Model.resaClient)
                 {
-                    <li>
-                        <td>
-                            Id du Véhicule : @r.Vehicule
-                        </td>
-                        <td>
-                            date de début : @r.DateReservation
-                        </td>
-                        <td>
-                            date de fin : @r.DateEcheance
-                        </td>
-                        <td>
-                            <a href="@Url.Action("RemoveResa","Clients", new { clientId = r.Client, debut = r.DateReservation, fin=r.DateEcheance})" class="btn btn-danger btn-block">Annuler la réservation</a>
-                        </td>
-                        
-                    </li>
+                        <li>
+                            <table class="col-12">
+                                <tr>
+                                    <th>
+                                        Voiture n°
+                                    </th>
+                                    <th>
+                                        Début
+                                    </th>
+                                    <th>
+                                        Retour
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                         @r.Vehicule
+                                    </td>
+                                    <td>
+                                        @r.DateReservation
+                                    </td>
+                                    <td>
+                                        @r.DateEcheance
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("RemoveResa","Clients", new { clientId = r.Client, debut = r.DateReservation, fin=r.DateEcheance})" class="btn btn-danger btn-block">Annuler la réservation</a>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </li>
                 }
             }
                     </ul>

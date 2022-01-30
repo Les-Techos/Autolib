@@ -16,6 +16,11 @@ namespace Autolib.Controllers
         // GET: ConnexionController
         public ActionResult Index()
         {
+            if (HttpContext.Session.GetInt32("id") > 0)
+            {
+                HttpContext.Session.Clear();
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 

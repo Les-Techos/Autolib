@@ -16,7 +16,7 @@
             </div>
             <div class="form-group col-md-12 col-lg-6">
                 <label asp-for="Paswd" class="control-label"></label>
-                <input asp-for="Paswd" class="form-control" value="" />
+                <input asp-for="Paswd" type="password" class="form-control" value="" placeholder="***********" />
                 <span asp-validation-for="Paswd" class="text-danger"></span>
             </div>
             <div class="form-group col-md-12 col-lg-6">
@@ -31,22 +31,23 @@
             </div>
             <div class="form-group col-md-12 col-lg-6">
                 <label asp-for="DateNaissance" class="control-label"></label>
-                <input asp-for="DateNaissance" id="naissance" class="form-control"/>
+                <input asp-for="DateNaissance" id="naissance" type="datetime"/>
                 <span asp-validation-for="DateNaissance" class="text-danger"></span>
             </div>
             <div class="form-group col-md-12 col-lg-6">
                 <input type="submit" value="Save" class="btn btn-validate btn-block" />
             </div>
         </form>
+    <br/>
         @if (Context.Session.GetInt32("id") > 0)
         {
             <a href="@Url.Action("Delete", "Clients", new { id = Context.Session.GetInt32("id") })">
-                <li class="list-group-item"><button id="submit" name="delete" class="btn btn-danger btn-block"> Supprimer </button></li>
+                <button id="submit" name="delete" class="btn btn-danger btn-block"> Supprimer le compte</button>
             </a>
         }
-    </div><div class="col-12">
-    <a href="@Url.Action("Details","Clients", new { id = Context.Session.GetInt32("id")})" class="btn btn-light btn-block">Retour à l'accueil</a>
-</div>
+        <br />
+    <a href="@Url.Action("Details","Clients", new { id = Context.Session.GetInt32("id")})" class="btn btn-light btn-block">Retour aux informations</a>
+    </div>
 </div>
 
 
@@ -64,7 +65,7 @@
     var confignaissance = {
         enableTime: false,
         altInput: true,
-        defaultDate: Date.Parse("@Model.DateNaissance"),
+        defaultDate: Date.parse("@(((DateTime) Model.DateNaissance).ToString("Y-m-dTH:i"))"),
         altFormat: "d-m-Y",
         dateFormat: "Y-m-dTH:i",
         maxDate: new Date().fp_incr(-1),
