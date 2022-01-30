@@ -3,10 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : mer. 12 jan. 2022 à 14:18
--- Version du serveur : 10.4.21-MariaDB
+-- Généré le : dim. 30 jan. 2022 à 14:21
+-- Version du serveur : 5.7.33
 -- Version de PHP : 7.4.19
 
+SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -20,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `autolib`
 --
+CREATE DATABASE IF NOT EXISTS `autolib` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE `autolib`;
 
 -- --------------------------------------------------------
 
@@ -27,6 +30,7 @@ SET time_zone = "+00:00";
 -- Structure de la table `borne`
 --
 
+DROP TABLE IF EXISTS `borne`;
 CREATE TABLE `borne` (
   `idBorne` int(11) NOT NULL,
   `etatBorne` tinyint(1) NOT NULL,
@@ -34,6 +38,11 @@ CREATE TABLE `borne` (
   `idVehicule` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Tronquer la table avant d'insérer `borne`
+--
+
+TRUNCATE TABLE `borne`;
 --
 -- Déchargement des données de la table `borne`
 --
@@ -224,419 +233,28 @@ INSERT INTO `borne` (`idBorne`, `etatBorne`, `station`, `idVehicule`) VALUES
 -- Structure de la table `client`
 --
 
+DROP TABLE IF EXISTS `client`;
 CREATE TABLE `client` (
   `idClient` int(11) NOT NULL,
   `nom` varchar(45) NOT NULL,
   `prenom` varchar(45) NOT NULL,
-  `date_naissance` date DEFAULT NULL
+  `date_naissance` date DEFAULT NULL,
+  `login` varchar(50) DEFAULT NULL,
+  `paswd` varchar(50) DEFAULT NULL,
+  `Salt` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Tronquer la table avant d'insérer `client`
+--
+
+TRUNCATE TABLE `client`;
 --
 -- Déchargement des données de la table `client`
 --
 
-INSERT INTO `client` (`idClient`, `nom`, `prenom`, `date_naissance`) VALUES
-(1, 'DUVERLIE', 'FRANCOISE', '1988-07-25'),
-(2, 'LEMARCHAND', 'COLETTE', '1954-09-26'),
-(3, 'ROCANCOURT', 'XAVIER', '1942-05-14'),
-(4, 'BUISARD', 'GEORGES', '1964-03-22'),
-(5, 'LAROSE', 'SOLANGE', '1972-03-19'),
-(6, 'HOLLEY', 'JANINE', '1934-07-06'),
-(7, 'RIVIERE', 'GERARD', '1952-08-12'),
-(8, 'LEGRAND', 'JEAN LOUIS', '1930-04-28'),
-(9, 'DUDOUET-MALASSIS', 'GISELE', '1976-02-01'),
-(10, 'MORIN', 'GENEVIEVE', '1967-05-09'),
-(11, 'LE NOEL', 'GUY', '1984-07-06'),
-(12, 'LANGRAND', 'AUGUSTE', '1972-02-12'),
-(13, 'ROBERT', 'PIERRE', '1947-06-09'),
-(14, 'COISPEL', 'BERNARD', '1984-11-21'),
-(15, 'LEBOSQUAIN', 'JEAN', '1967-08-20'),
-(16, 'LEROY', 'NADINE', '1967-10-10'),
-(17, 'LENORMAND', 'MICHEL', '1952-10-09'),
-(18, 'LE COMTE', 'GERARD', '1948-12-08'),
-(19, 'FERREIRA', 'JACK', '1942-11-13'),
-(20, 'VALENTE', 'J GEORGES', '1956-08-09'),
-(21, 'GAUTIER', 'YVETTE', '1952-08-19'),
-(22, 'ROYER', 'JEAN', '1948-06-07'),
-(23, 'LOPEZ', 'JEAN PIERRE', '1987-03-25'),
-(24, 'LETOUZEY', 'ANNETTE', '1984-09-02'),
-(25, 'LEVAVASSEUR', 'SOPHIE', '1931-11-19'),
-(26, 'LAIGNEL', 'ROGER', '1971-02-04'),
-(27, 'MORAINE', 'HUGUETTE', '1935-01-14'),
-(28, 'ROSEN', 'BERNADETTE', '1934-08-18'),
-(29, 'MARIE', 'GENEVIEVE', '1943-03-21'),
-(30, 'MEUDIC', 'JANINE', '1981-06-26'),
-(31, 'HEBERT', 'FRANCOISE', '1980-04-15'),
-(32, 'FALISE', 'MARIE THERESE', '1989-04-06'),
-(33, 'HEMERY', 'JEANNE', '1986-06-19'),
-(34, 'HEUDE', 'CLAUDINE', '1960-10-06'),
-(35, 'DAIGREMONT', 'CLAUDE', '1932-02-29'),
-(36, 'LEFRANCOIS', 'FRANCOIS', '1989-12-06'),
-(37, 'THETIOT', 'JEAN', '1978-11-22'),
-(38, 'FREMONT', 'REMY', '1935-03-11'),
-(39, 'BARRASSIN', 'DANIEL', '1933-05-20'),
-(40, 'SERAFIN', 'MAURICE', '1937-09-17'),
-(41, 'DUBUS', 'JEANNE', '1986-06-25'),
-(42, 'LEBLOND', 'MARIE LOUISE', '1983-10-24'),
-(43, 'VANDAELE', 'BERNARD', '1941-11-16'),
-(44, 'PERRIER', 'GUY', '1953-05-06'),
-(45, 'MANCEL', 'JEAN CHARLES', '1947-02-04'),
-(46, 'PIEDVACHE', 'MADELEINE', '1980-11-29'),
-(47, 'DEGRENNE', 'CLAUDE', '1941-09-10'),
-(48, 'CARABEUF', 'YVES', '1951-10-22'),
-(49, 'BAROCHE', 'PAULETTE', '1971-08-09'),
-(50, 'DEVIQUE', 'CHRISTIAN', '1954-07-27'),
-(51, 'GOGUET', 'DANIEL', '1957-04-16'),
-(52, 'DAGAIN', 'ALAIN', '1955-09-14'),
-(53, 'GROSMESNIL', 'MICHEL', '1990-10-17'),
-(54, 'COLIN', 'ALPHONSINE', '1988-11-25'),
-(55, 'BONVICINI', 'MAURICE', '1963-09-25'),
-(56, 'RYDER', 'RAYMONDE', '1974-07-23'),
-(57, 'DUCHATELLE', 'ROLAND', '1987-03-25'),
-(58, 'GDOWSKI', 'LOUISE', '1962-03-10'),
-(59, 'MESNIL', 'PASCAL', '1977-09-05'),
-(60, 'LEDUC', 'BERNARD', '1941-04-15'),
-(61, 'COLLET', 'THERESE', '1943-05-19'),
-(62, 'AUGER', 'FRANCOISE', '1966-06-06'),
-(63, 'CANONNE', 'PATRICIA', '1963-08-28'),
-(64, 'VASLIN', 'BERNARD', '1952-04-21'),
-(65, 'MARTIN', 'ELIANE', '1931-09-19'),
-(66, 'CATHRINE', 'HENRI', '1955-04-19'),
-(67, 'MARTIN', 'CLAUDE', '1962-04-13'),
-(68, 'DELARUE', 'MARIE MADELEINE', '1941-02-15'),
-(69, 'PIROU', 'PAUL', '1964-02-23'),
-(70, 'FARCY', 'JOSETTE', '1975-04-21'),
-(71, 'LEBLATIER', 'MARCEL', '1936-09-03'),
-(72, 'LEFLOCH', 'GERARD', '1976-05-27'),
-(73, 'CORDELLIER', 'MARCELLINE', '1947-11-22'),
-(74, 'VAN DOORNE', 'MARIE CLAUDE', '1977-03-04'),
-(75, 'DAUVERGNE', 'YOLANDE', '1960-04-01'),
-(76, 'LEDRU', 'MICHEL', '1945-04-28'),
-(77, 'DESLANDES', 'MADELEINE', '1936-05-22'),
-(78, 'LEBRET', 'NICOLE', '1937-06-29'),
-(79, 'BAZILLE', 'DANIEL', '1968-12-05'),
-(80, 'LHERMITE', 'SIMONE', '1978-05-03'),
-(81, 'LESENECHAL', 'ARMELLE', '1955-07-12'),
-(82, 'GUERIN', 'PATRICIA', '1945-07-22'),
-(83, 'JOSEPHINE', 'JULIETTE', '1949-10-21'),
-(84, 'HAMEL', 'MAURICETTE', '1986-10-01'),
-(85, 'SANCHEZ ACUNA', 'CHARLES', '1970-06-21'),
-(86, 'JACQUES', 'ODETTE', '1971-08-12'),
-(87, 'ANJOU', 'FERNAND', '1980-10-20'),
-(88, 'LEFIOT', 'SERGE', '1947-06-22'),
-(89, 'MENANT', 'XAVIER', '1953-12-13'),
-(90, 'DAVID', 'SIMONNE', '1945-05-18'),
-(91, 'MARIAGE', 'IRENE', '1947-12-06'),
-(92, 'CAPET', 'BERNARD', '1970-01-22'),
-(93, 'GROULT', 'JEAN CLAUDE', '1938-07-22'),
-(94, 'ROGUE', 'HELENE', '1938-09-14'),
-(95, 'LEMAINE', 'MARTHE', '1972-12-26'),
-(96, 'BOURREAU', 'IRENE', '1943-08-21'),
-(97, 'ROCQUANCOURT', 'CECILE', '1949-02-26'),
-(98, 'ROBINE', 'GEORGETTE', '1970-02-12'),
-(99, 'LEMOIGNE', 'MARCELINE', '1988-05-13'),
-(100, 'LEBRETON', 'JEAN-LUC', '1970-11-27'),
-(101, 'DUVERLIE', 'FRANCOISE', '1988-07-25'),
-(102, 'LEMARCHAND', 'COLETTE', '1954-09-26'),
-(103, 'ROCANCOURT', 'XAVIER', '1942-05-14'),
-(104, 'BUISARD', 'GEORGES', '1964-03-22'),
-(105, 'LAROSE', 'SOLANGE', '1972-03-19'),
-(106, 'HOLLEY', 'JANINE', '1934-07-06'),
-(107, 'RIVIERE', 'GERARD', '1952-08-12'),
-(108, 'LEGRAND', 'JEAN LOUIS', '1930-04-28'),
-(109, 'DUDOUET-MALASSIS', 'GISELE', '1976-02-01'),
-(110, 'MORIN', 'GENEVIEVE', '1967-05-09'),
-(111, 'LE NOEL', 'GUY', '1984-07-06'),
-(112, 'LANGRAND', 'AUGUSTE', '1972-02-12'),
-(113, 'ROBERT', 'PIERRE', '1947-06-09'),
-(114, 'COISPEL', 'BERNARD', '1984-11-21'),
-(115, 'LEBOSQUAIN', 'JEAN', '1967-08-20'),
-(116, 'LEROY', 'NADINE', '1967-10-10'),
-(117, 'LENORMAND', 'MICHEL', '1952-10-09'),
-(118, 'LE COMTE', 'GERARD', '1948-12-08'),
-(119, 'FERREIRA', 'JACK', '1942-11-13'),
-(120, 'VALENTE', 'J GEORGES', '1956-08-09'),
-(121, 'GAUTIER', 'YVETTE', '1952-08-19'),
-(122, 'ROYER', 'JEAN', '1948-06-07'),
-(123, 'LOPEZ', 'JEAN PIERRE', '1987-03-25'),
-(124, 'LETOUZEY', 'ANNETTE', '1984-09-02'),
-(125, 'LEVAVASSEUR', 'SOPHIE', '1931-11-19'),
-(126, 'LAIGNEL', 'ROGER', '1971-02-04'),
-(127, 'MORAINE', 'HUGUETTE', '1935-01-14'),
-(128, 'ROSEN', 'BERNADETTE', '1934-08-18'),
-(129, 'MARIE', 'GENEVIEVE', '1943-03-21'),
-(130, 'MEUDIC', 'JANINE', '1981-06-26'),
-(131, 'HEBERT', 'FRANCOISE', '1980-04-15'),
-(132, 'FALISE', 'MARIE THERESE', '1989-04-06'),
-(133, 'HEMERY', 'JEANNE', '1986-06-19'),
-(134, 'HEUDE', 'CLAUDINE', '1960-10-06'),
-(135, 'DAIGREMONT', 'CLAUDE', '1932-02-29'),
-(136, 'LEFRANCOIS', 'FRANCOIS', '1989-12-06'),
-(137, 'THETIOT', 'JEAN', '1978-11-22'),
-(138, 'FREMONT', 'REMY', '1935-03-11'),
-(139, 'BARRASSIN', 'DANIEL', '1933-05-20'),
-(140, 'SERAFIN', 'MAURICE', '1937-09-17'),
-(141, 'DUBUS', 'JEANNE', '1986-06-25'),
-(142, 'LEBLOND', 'MARIE LOUISE', '1983-10-24'),
-(143, 'VANDAELE', 'BERNARD', '1941-11-16'),
-(144, 'PERRIER', 'GUY', '1953-05-06'),
-(145, 'MANCEL', 'JEAN CHARLES', '1947-02-04'),
-(146, 'PIEDVACHE', 'MADELEINE', '1980-11-29'),
-(147, 'DEGRENNE', 'CLAUDE', '1941-09-10'),
-(148, 'CARABEUF', 'YVES', '1951-10-22'),
-(149, 'BAROCHE', 'PAULETTE', '1971-08-09'),
-(150, 'DEVIQUE', 'CHRISTIAN', '1954-07-27'),
-(151, 'GOGUET', 'DANIEL', '1957-04-16'),
-(152, 'DAGAIN', 'ALAIN', '1955-09-14'),
-(153, 'GROSMESNIL', 'MICHEL', '1990-10-17'),
-(154, 'COLIN', 'ALPHONSINE', '1988-11-25'),
-(155, 'BONVICINI', 'MAURICE', '1963-09-25'),
-(156, 'RYDER', 'RAYMONDE', '1974-07-23'),
-(157, 'DUCHATELLE', 'ROLAND', '1987-03-25'),
-(158, 'GDOWSKI', 'LOUISE', '1962-03-10'),
-(159, 'MESNIL', 'PASCAL', '1977-09-05'),
-(160, 'LEDUC', 'BERNARD', '1941-04-15'),
-(161, 'COLLET', 'THERESE', '1943-05-19'),
-(162, 'AUGER', 'FRANCOISE', '1966-06-06'),
-(163, 'CANONNE', 'PATRICIA', '1963-08-28'),
-(164, 'VASLIN', 'BERNARD', '1952-04-21'),
-(165, 'MARTIN', 'ELIANE', '1931-09-19'),
-(166, 'CATHRINE', 'HENRI', '1955-04-19'),
-(167, 'MARTIN', 'CLAUDE', '1962-04-13'),
-(168, 'DELARUE', 'MARIE MADELEINE', '1941-02-15'),
-(169, 'PIROU', 'PAUL', '1964-02-23'),
-(170, 'FARCY', 'JOSETTE', '1975-04-21'),
-(171, 'LEBLATIER', 'MARCEL', '1936-09-03'),
-(172, 'LEFLOCH', 'GERARD', '1976-05-27'),
-(173, 'CORDELLIER', 'MARCELLINE', '1947-11-22'),
-(174, 'VAN DOORNE', 'MARIE CLAUDE', '1977-03-04'),
-(175, 'DAUVERGNE', 'YOLANDE', '1960-04-01'),
-(176, 'LEDRU', 'MICHEL', '1945-04-28'),
-(177, 'DESLANDES', 'MADELEINE', '1936-05-22'),
-(178, 'LEBRET', 'NICOLE', '1937-06-29'),
-(179, 'BAZILLE', 'DANIEL', '1968-12-05'),
-(180, 'LHERMITE', 'SIMONE', '1978-05-03'),
-(181, 'LESENECHAL', 'ARMELLE', '1955-07-12'),
-(182, 'GUERIN', 'PATRICIA', '1945-07-22'),
-(183, 'JOSEPHINE', 'JULIETTE', '1949-10-21'),
-(184, 'HAMEL', 'MAURICETTE', '1986-10-01'),
-(185, 'SANCHEZ ACUNA', 'CHARLES', '1970-06-21'),
-(186, 'JACQUES', 'ODETTE', '1971-08-12'),
-(187, 'ANJOU', 'FERNAND', '1980-10-20'),
-(188, 'LEFIOT', 'SERGE', '1947-06-22'),
-(189, 'MENANT', 'XAVIER', '1953-12-13'),
-(190, 'DAVID', 'SIMONNE', '1945-05-18'),
-(191, 'MARIAGE', 'IRENE', '1947-12-06'),
-(192, 'CAPET', 'BERNARD', '1970-01-22'),
-(193, 'GROULT', 'JEAN CLAUDE', '1938-07-22'),
-(194, 'ROGUE', 'HELENE', '1938-09-14'),
-(195, 'LEMAINE', 'MARTHE', '1972-12-26'),
-(196, 'BOURREAU', 'IRENE', '1943-08-21'),
-(197, 'ROCQUANCOURT', 'CECILE', '1949-02-26'),
-(198, 'ROBINE', 'GEORGETTE', '1970-02-12'),
-(199, 'LEMOIGNE', 'MARCELINE', '1988-05-13'),
-(200, 'LEBRETON', 'JEAN-LUC', '1970-11-27'),
-(201, 'DUVERLIE', 'FRANCOISE', '1988-07-25'),
-(202, 'LEMARCHAND', 'COLETTE', '1954-09-26'),
-(203, 'ROCANCOURT', 'XAVIER', '1942-05-14'),
-(204, 'BUISARD', 'GEORGES', '1964-03-22'),
-(205, 'LAROSE', 'SOLANGE', '1972-03-19'),
-(206, 'HOLLEY', 'JANINE', '1934-07-06'),
-(207, 'RIVIERE', 'GERARD', '1952-08-12'),
-(208, 'LEGRAND', 'JEAN LOUIS', '1930-04-28'),
-(209, 'DUDOUET-MALASSIS', 'GISELE', '1976-02-01'),
-(210, 'MORIN', 'GENEVIEVE', '1967-05-09'),
-(211, 'LE NOEL', 'GUY', '1984-07-06'),
-(212, 'LANGRAND', 'AUGUSTE', '1972-02-12'),
-(213, 'ROBERT', 'PIERRE', '1947-06-09'),
-(214, 'COISPEL', 'BERNARD', '1984-11-21'),
-(215, 'LEBOSQUAIN', 'JEAN', '1967-08-20'),
-(216, 'LEROY', 'NADINE', '1967-10-10'),
-(217, 'LENORMAND', 'MICHEL', '1952-10-09'),
-(218, 'LE COMTE', 'GERARD', '1948-12-08'),
-(219, 'FERREIRA', 'JACK', '1942-11-13'),
-(220, 'VALENTE', 'J GEORGES', '1956-08-09'),
-(221, 'GAUTIER', 'YVETTE', '1952-08-19'),
-(222, 'ROYER', 'JEAN', '1948-06-07'),
-(223, 'LOPEZ', 'JEAN PIERRE', '1987-03-25'),
-(224, 'LETOUZEY', 'ANNETTE', '1984-09-02'),
-(225, 'LEVAVASSEUR', 'SOPHIE', '1931-11-19'),
-(226, 'LAIGNEL', 'ROGER', '1971-02-04'),
-(227, 'MORAINE', 'HUGUETTE', '1935-01-14'),
-(228, 'ROSEN', 'BERNADETTE', '1934-08-18'),
-(229, 'MARIE', 'GENEVIEVE', '1943-03-21'),
-(230, 'MEUDIC', 'JANINE', '1981-06-26'),
-(231, 'HEBERT', 'FRANCOISE', '1980-04-15'),
-(232, 'FALISE', 'MARIE THERESE', '1989-04-06'),
-(233, 'HEMERY', 'JEANNE', '1986-06-19'),
-(234, 'HEUDE', 'CLAUDINE', '1960-10-06'),
-(235, 'DAIGREMONT', 'CLAUDE', '1932-02-29'),
-(236, 'LEFRANCOIS', 'FRANCOIS', '1989-12-06'),
-(237, 'THETIOT', 'JEAN', '1978-11-22'),
-(238, 'FREMONT', 'REMY', '1935-03-11'),
-(239, 'BARRASSIN', 'DANIEL', '1933-05-20'),
-(240, 'SERAFIN', 'MAURICE', '1937-09-17'),
-(241, 'DUBUS', 'JEANNE', '1986-06-25'),
-(242, 'LEBLOND', 'MARIE LOUISE', '1983-10-24'),
-(243, 'VANDAELE', 'BERNARD', '1941-11-16'),
-(244, 'PERRIER', 'GUY', '1953-05-06'),
-(245, 'MANCEL', 'JEAN CHARLES', '1947-02-04'),
-(246, 'PIEDVACHE', 'MADELEINE', '1980-11-29'),
-(247, 'DEGRENNE', 'CLAUDE', '1941-09-10'),
-(248, 'CARABEUF', 'YVES', '1951-10-22'),
-(249, 'BAROCHE', 'PAULETTE', '1971-08-09'),
-(250, 'DEVIQUE', 'CHRISTIAN', '1954-07-27'),
-(251, 'GOGUET', 'DANIEL', '1957-04-16'),
-(252, 'DAGAIN', 'ALAIN', '1955-09-14'),
-(253, 'GROSMESNIL', 'MICHEL', '1990-10-17'),
-(254, 'COLIN', 'ALPHONSINE', '1988-11-25'),
-(255, 'BONVICINI', 'MAURICE', '1963-09-25'),
-(256, 'RYDER', 'RAYMONDE', '1974-07-23'),
-(257, 'DUCHATELLE', 'ROLAND', '1987-03-25'),
-(258, 'GDOWSKI', 'LOUISE', '1962-03-10'),
-(259, 'MESNIL', 'PASCAL', '1977-09-05'),
-(260, 'LEDUC', 'BERNARD', '1941-04-15'),
-(261, 'COLLET', 'THERESE', '1943-05-19'),
-(262, 'AUGER', 'FRANCOISE', '1966-06-06'),
-(263, 'CANONNE', 'PATRICIA', '1963-08-28'),
-(264, 'VASLIN', 'BERNARD', '1952-04-21'),
-(265, 'MARTIN', 'ELIANE', '1931-09-19'),
-(266, 'CATHRINE', 'HENRI', '1955-04-19'),
-(267, 'MARTIN', 'CLAUDE', '1962-04-13'),
-(268, 'DELARUE', 'MARIE MADELEINE', '1941-02-15'),
-(269, 'PIROU', 'PAUL', '1964-02-23'),
-(270, 'FARCY', 'JOSETTE', '1975-04-21'),
-(271, 'LEBLATIER', 'MARCEL', '1936-09-03'),
-(272, 'LEFLOCH', 'GERARD', '1976-05-27'),
-(273, 'CORDELLIER', 'MARCELLINE', '1947-11-22'),
-(274, 'VAN DOORNE', 'MARIE CLAUDE', '1977-03-04'),
-(275, 'DAUVERGNE', 'YOLANDE', '1960-04-01'),
-(276, 'LEDRU', 'MICHEL', '1945-04-28'),
-(277, 'DESLANDES', 'MADELEINE', '1936-05-22'),
-(278, 'LEBRET', 'NICOLE', '1937-06-29'),
-(279, 'BAZILLE', 'DANIEL', '1968-12-05'),
-(280, 'LHERMITE', 'SIMONE', '1978-05-03'),
-(281, 'LESENECHAL', 'ARMELLE', '1955-07-12'),
-(282, 'GUERIN', 'PATRICIA', '1945-07-22'),
-(283, 'JOSEPHINE', 'JULIETTE', '1949-10-21'),
-(284, 'HAMEL', 'MAURICETTE', '1986-10-01'),
-(285, 'SANCHEZ ACUNA', 'CHARLES', '1970-06-21'),
-(286, 'JACQUES', 'ODETTE', '1971-08-12'),
-(287, 'ANJOU', 'FERNAND', '1980-10-20'),
-(288, 'LEFIOT', 'SERGE', '1947-06-22'),
-(289, 'MENANT', 'XAVIER', '1953-12-13'),
-(290, 'DAVID', 'SIMONNE', '1945-05-18'),
-(291, 'MARIAGE', 'IRENE', '1947-12-06'),
-(292, 'CAPET', 'BERNARD', '1970-01-22'),
-(293, 'GROULT', 'JEAN CLAUDE', '1938-07-22'),
-(294, 'ROGUE', 'HELENE', '1938-09-14'),
-(295, 'LEMAINE', 'MARTHE', '1972-12-26'),
-(296, 'BOURREAU', 'IRENE', '1943-08-21'),
-(297, 'ROCQUANCOURT', 'CECILE', '1949-02-26'),
-(298, 'ROBINE', 'GEORGETTE', '1970-02-12'),
-(299, 'LEMOIGNE', 'MARCELINE', '1988-05-13'),
-(300, 'LEBRETON', 'JEAN-LUC', '1970-11-27'),
-(301, 'DUVERLIE', 'FRANCOISE', '1988-07-25'),
-(302, 'LEMARCHAND', 'COLETTE', '1954-09-26'),
-(303, 'ROCANCOURT', 'XAVIER', '1942-05-14'),
-(304, 'BUISARD', 'GEORGES', '1964-03-22'),
-(305, 'LAROSE', 'SOLANGE', '1972-03-19'),
-(306, 'HOLLEY', 'JANINE', '1934-07-06'),
-(307, 'RIVIERE', 'GERARD', '1952-08-12'),
-(308, 'LEGRAND', 'JEAN LOUIS', '1930-04-28'),
-(309, 'DUDOUET-MALASSIS', 'GISELE', '1976-02-01'),
-(310, 'MORIN', 'GENEVIEVE', '1967-05-09'),
-(311, 'LE NOEL', 'GUY', '1984-07-06'),
-(312, 'LANGRAND', 'AUGUSTE', '1972-02-12'),
-(313, 'ROBERT', 'PIERRE', '1947-06-09'),
-(314, 'COISPEL', 'BERNARD', '1984-11-21'),
-(315, 'LEBOSQUAIN', 'JEAN', '1967-08-20'),
-(316, 'LEROY', 'NADINE', '1967-10-10'),
-(317, 'LENORMAND', 'MICHEL', '1952-10-09'),
-(318, 'LE COMTE', 'GERARD', '1948-12-08'),
-(319, 'FERREIRA', 'JACK', '1942-11-13'),
-(320, 'VALENTE', 'J GEORGES', '1956-08-09'),
-(321, 'GAUTIER', 'YVETTE', '1952-08-19'),
-(322, 'ROYER', 'JEAN', '1948-06-07'),
-(323, 'LOPEZ', 'JEAN PIERRE', '1987-03-25'),
-(324, 'LETOUZEY', 'ANNETTE', '1984-09-02'),
-(325, 'LEVAVASSEUR', 'SOPHIE', '1931-11-19'),
-(326, 'LAIGNEL', 'ROGER', '1971-02-04'),
-(327, 'MORAINE', 'HUGUETTE', '1935-01-14'),
-(328, 'ROSEN', 'BERNADETTE', '1934-08-18'),
-(329, 'MARIE', 'GENEVIEVE', '1943-03-21'),
-(330, 'MEUDIC', 'JANINE', '1981-06-26'),
-(331, 'HEBERT', 'FRANCOISE', '1980-04-15'),
-(332, 'FALISE', 'MARIE THERESE', '1989-04-06'),
-(333, 'HEMERY', 'JEANNE', '1986-06-19'),
-(334, 'HEUDE', 'CLAUDINE', '1960-10-06'),
-(335, 'DAIGREMONT', 'CLAUDE', '1932-02-29'),
-(336, 'LEFRANCOIS', 'FRANCOIS', '1989-12-06'),
-(337, 'THETIOT', 'JEAN', '1978-11-22'),
-(338, 'FREMONT', 'REMY', '1935-03-11'),
-(339, 'BARRASSIN', 'DANIEL', '1933-05-20'),
-(340, 'SERAFIN', 'MAURICE', '1937-09-17'),
-(341, 'DUBUS', 'JEANNE', '1986-06-25'),
-(342, 'LEBLOND', 'MARIE LOUISE', '1983-10-24'),
-(343, 'VANDAELE', 'BERNARD', '1941-11-16'),
-(344, 'PERRIER', 'GUY', '1953-05-06'),
-(345, 'MANCEL', 'JEAN CHARLES', '1947-02-04'),
-(346, 'PIEDVACHE', 'MADELEINE', '1980-11-29'),
-(347, 'DEGRENNE', 'CLAUDE', '1941-09-10'),
-(348, 'CARABEUF', 'YVES', '1951-10-22'),
-(349, 'BAROCHE', 'PAULETTE', '1971-08-09'),
-(350, 'DEVIQUE', 'CHRISTIAN', '1954-07-27'),
-(351, 'GOGUET', 'DANIEL', '1957-04-16'),
-(352, 'DAGAIN', 'ALAIN', '1955-09-14'),
-(353, 'GROSMESNIL', 'MICHEL', '1990-10-17'),
-(354, 'COLIN', 'ALPHONSINE', '1988-11-25'),
-(355, 'BONVICINI', 'MAURICE', '1963-09-25'),
-(356, 'RYDER', 'RAYMONDE', '1974-07-23'),
-(357, 'DUCHATELLE', 'ROLAND', '1987-03-25'),
-(358, 'GDOWSKI', 'LOUISE', '1962-03-10'),
-(359, 'MESNIL', 'PASCAL', '1977-09-05'),
-(360, 'LEDUC', 'BERNARD', '1941-04-15'),
-(361, 'COLLET', 'THERESE', '1943-05-19'),
-(362, 'AUGER', 'FRANCOISE', '1966-06-06'),
-(363, 'CANONNE', 'PATRICIA', '1963-08-28'),
-(364, 'VASLIN', 'BERNARD', '1952-04-21'),
-(365, 'MARTIN', 'ELIANE', '1931-09-19'),
-(366, 'CATHRINE', 'HENRI', '1955-04-19'),
-(367, 'MARTIN', 'CLAUDE', '1962-04-13'),
-(368, 'DELARUE', 'MARIE MADELEINE', '1941-02-15'),
-(369, 'PIROU', 'PAUL', '1964-02-23'),
-(370, 'FARCY', 'JOSETTE', '1975-04-21'),
-(371, 'LEBLATIER', 'MARCEL', '1936-09-03'),
-(372, 'LEFLOCH', 'GERARD', '1976-05-27'),
-(373, 'CORDELLIER', 'MARCELLINE', '1947-11-22'),
-(374, 'VAN DOORNE', 'MARIE CLAUDE', '1977-03-04'),
-(375, 'DAUVERGNE', 'YOLANDE', '1960-04-01'),
-(376, 'LEDRU', 'MICHEL', '1945-04-28'),
-(377, 'DESLANDES', 'MADELEINE', '1936-05-22'),
-(378, 'LEBRET', 'NICOLE', '1937-06-29'),
-(379, 'BAZILLE', 'DANIEL', '1968-12-05'),
-(380, 'LHERMITE', 'SIMONE', '1978-05-03'),
-(381, 'LESENECHAL', 'ARMELLE', '1955-07-12'),
-(382, 'GUERIN', 'PATRICIA', '1945-07-22'),
-(383, 'JOSEPHINE', 'JULIETTE', '1949-10-21'),
-(384, 'HAMEL', 'MAURICETTE', '1986-10-01'),
-(385, 'SANCHEZ ACUNA', 'CHARLES', '1970-06-21'),
-(386, 'JACQUES', 'ODETTE', '1971-08-12'),
-(387, 'ANJOU', 'FERNAND', '1980-10-20'),
-(388, 'LEFIOT', 'SERGE', '1947-06-22'),
-(389, 'MENANT', 'XAVIER', '1953-12-13'),
-(390, 'DAVID', 'SIMONNE', '1945-05-18'),
-(391, 'MARIAGE', 'IRENE', '1947-12-06'),
-(392, 'CAPET', 'BERNARD', '1970-01-22'),
-(393, 'GROULT', 'JEAN CLAUDE', '1938-07-22'),
-(394, 'ROGUE', 'HELENE', '1938-09-14'),
-(395, 'LEMAINE', 'MARTHE', '1972-12-26'),
-(396, 'BOURREAU', 'IRENE', '1943-08-21'),
-(397, 'ROCQUANCOURT', 'CECILE', '1949-02-26'),
-(398, 'ROBINE', 'GEORGETTE', '1970-02-12'),
-(399, 'LEMOIGNE', 'MARCELINE', '1988-05-13'),
-(400, 'LEBRETON', 'JEAN-LUC', '1970-11-27'),
-(402, 'ADMIN', 'ADMIN', '2000-05-13');
+INSERT INTO `client` (`idClient`, `nom`, `prenom`, `date_naissance`, `login`, `paswd`, `Salt`) VALUES
+(1, 'ISI', 'Merlot', '2000-01-20', 'Merlot', 'xSKqAqopBbGfdSGaaWeOHsbtMLpq/ujgkSyKpSirCec=', 'jAG5JqJm4ddIs2ZFLRo9dDilAHVhTZHnq8gHRtvAAho=');
 
 -- --------------------------------------------------------
 
@@ -644,6 +262,7 @@ INSERT INTO `client` (`idClient`, `nom`, `prenom`, `date_naissance`) VALUES
 -- Structure de la table `reservation`
 --
 
+DROP TABLE IF EXISTS `reservation`;
 CREATE TABLE `reservation` (
   `vehicule` int(11) NOT NULL,
   `client` int(11) NOT NULL,
@@ -651,12 +270,26 @@ CREATE TABLE `reservation` (
   `date_echeance` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Tronquer la table avant d'insérer `reservation`
+--
+
+TRUNCATE TABLE `reservation`;
+--
+-- Déchargement des données de la table `reservation`
+--
+
+INSERT INTO `reservation` (`vehicule`, `client`, `date_reservation`, `date_echeance`) VALUES
+(45, 1, '2022-01-30 21:05:00', '2022-01-31 10:00:00'),
+(65, 1, '2022-01-30 15:00:00', '2022-01-30 21:00:00');
+
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `station`
 --
 
+DROP TABLE IF EXISTS `station`;
 CREATE TABLE `station` (
   `idStation` int(11) NOT NULL,
   `latitude` decimal(9,6) NOT NULL,
@@ -667,6 +300,11 @@ CREATE TABLE `station` (
   `code_postal` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Tronquer la table avant d'insérer `station`
+--
+
+TRUNCATE TABLE `station`;
 --
 -- Déchargement des données de la table `station`
 --
@@ -714,12 +352,18 @@ INSERT INTO `station` (`idStation`, `latitude`, `longitude`, `adresse`, `numero`
 -- Structure de la table `type_vehicule`
 --
 
+DROP TABLE IF EXISTS `type_vehicule`;
 CREATE TABLE `type_vehicule` (
   `idType_vehicule` int(11) NOT NULL,
   `categorie` varchar(45) NOT NULL,
   `type_vehicule` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Tronquer la table avant d'insérer `type_vehicule`
+--
+
+TRUNCATE TABLE `type_vehicule`;
 --
 -- Déchargement des données de la table `type_vehicule`
 --
@@ -740,6 +384,7 @@ INSERT INTO `type_vehicule` (`idType_vehicule`, `categorie`, `type_vehicule`) VA
 -- Structure de la table `utilise`
 --
 
+DROP TABLE IF EXISTS `utilise`;
 CREATE TABLE `utilise` (
   `Vehicule` int(11) NOT NULL,
   `Client` int(11) NOT NULL,
@@ -748,12 +393,18 @@ CREATE TABLE `utilise` (
   `borne_arrivee` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Tronquer la table avant d'insérer `utilise`
+--
+
+TRUNCATE TABLE `utilise`;
 -- --------------------------------------------------------
 
 --
 -- Structure de la table `vehicule`
 --
 
+DROP TABLE IF EXISTS `vehicule`;
 CREATE TABLE `vehicule` (
   `idVehicule` int(11) NOT NULL,
   `RFID` int(11) NOT NULL,
@@ -764,6 +415,11 @@ CREATE TABLE `vehicule` (
   `type_vehicule` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Tronquer la table avant d'insérer `vehicule`
+--
+
+TRUNCATE TABLE `vehicule`;
 --
 -- Déchargement des données de la table `vehicule`
 --
@@ -928,7 +584,7 @@ ALTER TABLE `borne`
 -- AUTO_INCREMENT pour la table `client`
 --
 ALTER TABLE `client`
-  MODIFY `idClient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=403;
+  MODIFY `idClient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `station`
@@ -980,6 +636,7 @@ ALTER TABLE `utilise`
 --
 ALTER TABLE `vehicule`
   ADD CONSTRAINT `fk_Vehicule_Type_vehicule1` FOREIGN KEY (`type_vehicule`) REFERENCES `type_vehicule` (`idType_vehicule`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
