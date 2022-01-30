@@ -54,13 +54,13 @@
                 startPicker.set('minTime', new Date.getTime);
                 endPicker.set('minTime', new Date.getTime);
             } else {
-                startPicker.set('minTime', new Date.getTime);
+                startPicker.set('minTime', 0);
                 endPicker.set('minTime', 0);
             }
             
         },
     }
-    flatpickr("#debut", configDebut);
+    
     startPicker = flatpickr("#debut", configDebut);
     var configFin = {
         enableTime: true,

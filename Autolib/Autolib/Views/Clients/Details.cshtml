@@ -1,42 +1,84 @@
-﻿@model Autolib.Models.Domain.Client
+﻿@model Autolib.Models.ViewModel.ClientsModel
+
+@using Microsoft.AspNetCore.Http;
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Détails";
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>Client</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Login)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Login)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nom)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nom)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Prenom)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Prenom)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateNaissance)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateNaissance)
-        </dd>
-    </dl>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Informations du compte</h5>
+                    <div>
+                    <dl class="row">
+                        <dt class="col-12">
+                            Identifiant
+                        </dt>
+                        <dd class="col-12">
+                            @Html.DisplayFor(model => model.clientActuel.Login)
+                        </dd>
+                        <dt class="col-12">
+                            Nom
+                        </dt>
+                        <dd class="col-12">
+                            @Html.DisplayFor(model => model.clientActuel.Nom)
+                        </dd>
+                        <dt class="col-12">
+                            Prénom
+                        </dt>
+                        <dd class="col-12">
+                            @Html.DisplayFor(model => model.clientActuel.Prenom)
+                        </dd>
+                        <dt class="col-12">
+                            Date de Naissance
+                        </dt>
+                        <dd class="col-12">
+                            @(((DateTime) Model.clientActuel.DateNaissance).ToString("dd MM yyyy"))
+                        </dd>
+                    </dl>
+                </div>
+                <div>
+                    <a class="btn btn-warning btn-block" asp-action="Edit" asp-route-id="@Model.clientActuel.IdClient">Editer les données</a>
+                    <a class="btn btn-validate btn-block" asp-action="Index">Back to List</a>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="card" style="max-height:500px">
+                <div class="card-header">Historique de commandes</div>
+                <div class="card-body">
+                    <ul>
+                        @if(Model.resaClient != null)
+            {
+                            @foreach(var r in Model.resaClient)
+                {
+                    <li>
+                        <td>
+                            Id du Véhicule : @r.Vehicule
+                        </td>
+                        <td>
+                            date de début : @r.DateReservation
+                        </td>
+                        <td>
+                            date de fin : @r.DateEcheance
+                        </td>
+                        <td>
+                            <a href="@Url.Action("RemoveResa","Clients", new { clientId = r.Client, debut = r.DateReservation, fin=r.DateEcheance})" class="btn btn-danger btn-block">Annuler la réservation</a>
+                        </td>
+                        
+                    </li>
+                }
+            }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.IdClient">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+

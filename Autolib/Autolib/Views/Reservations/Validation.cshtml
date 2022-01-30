@@ -1,18 +1,45 @@
-﻿
+﻿@using Microsoft.AspNetCore.Http;
 @{
     ViewData["Title"] = "Validation";
 }
 
-<h1>Validation</h1>
-@if(@Model != null) { 
-    @Model.debut
-    <br />
-    @Model.fin
-    <br />
-    @Model.typeVehc
-    <br />
-    @Model.numVehc
-    <br />
-    @Model.etatRes
-    <br />
-}
+<div class="selectVehc row">
+    @if (@Model != null)
+    {
+        @if (@Model.etatRes == 0)
+        {
+
+            <h1>Votre réservation a été effectuée !</h1><br /><br />
+            <p>
+                Le véhicule @Model.typeVehc sera utilisable du @Model.debut.ToString("dd MM yyyy à HH:mm") jusqu'au @Model.fin.ToString("dd MM yyyy à HH:mm");
+            </p>
+            <br />
+            <br />
+
+        }
+        else @if (@Model.etatRes == 1)
+       {<h1>Une erreur est survenue</h1><br /><br />
+        <p>
+            Le véhicule @Model.typeVehc est déjà réservé;
+        </p>
+    }
+    else @if (@Model.etatRes == -2)
+   {
+    <h1>Une erreur est survenue</h1><br /><br />
+    <p>
+        Vous ne pouvez pas réserver le véhicule @Model.typeVehc car vous avez une réservation en cours sur la même période;
+        <br /> Du @Model.debut.ToString("dd MM yyyy à HH:mm") jusqu'au @Model.fin.ToString("dd MM yyyy à HH:mm");
+    </p>
+   }
+   else
+   {
+       <h1>Une erreur est survenue</h1><br /><br />
+       <p>
+           Nous n'avons pas plus de détails pour le moment, veuillez réessayer
+       </p>
+   }
+
+    }
+    <div class="col-md-12 col-lg-6"><a href="@Url.Action("Index", "Home")" class="btn btn-validate btn-block">Retourner à l'accueil</a></div>
+    <div class="col-md-12 col-lg-6"><a href="@Url.Action("Details","Clients", new { id = Context.Session.GetInt32("id")})" class="btn btn-danger btn-block">Accéder à l'espace client</a></div>
+</div>

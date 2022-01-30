@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Autolib.Models.Domain;
 using Autolib.Models.Dao;
 using Microsoft.AspNetCore.Http;
+using Autolib.Models.ViewModel;
 
 namespace Autolib.Controllers
 {
@@ -29,6 +30,7 @@ namespace Autolib.Controllers
         // GET: Clients/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ClientsModel CM = null;
             if (id == null)
             {
                 return NotFound();
@@ -40,8 +42,39 @@ namespace Autolib.Controllers
             {
                 return NotFound();
             }
+            CM = new ClientsModel(client, ServiceReservation.getInstance().getReservations(client));
 
-            return View(client);
+            return View(CM);
+        }public async Task<IActionResult> RemoveResa(int? clientId, DateTime debut, DateTime fin)
+        {
+            Reservation r = null;
+            ClientsModel CM = null;
+            if (clientId == null)
+            {
+                return NotFound();
+            }
+            var client = ServiceClient.getInstance().GetClient((int) clientId);
+            if (client == null)
+            {
+                return NotFound();
+            }
+            r = ServiceReservation.getInstance().getReservations(client, debut, fin).FirstOrDefault();
+            if (r == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                ServiceReservation.getInstance().annule_resa(r);
+            }catch(Exception e)
+            {
+                return NotFound();
+            }
+
+            
+            CM = new ClientsModel(client, ServiceReservation.getInstance().getReservations(client));
+
+            return View("Details", CM);
         }
 
         // POST: Clients/Create
@@ -50,12 +83,37 @@ namespace Autolib.Controllers
         [HttpPost]
         public ActionResult Create()
         {
-            Console.WriteLine("JE SUIS LA");
             Client c = new Client();
             if (ModelState.IsValid)
             {
-                c.Login = Request.Form["signupusername"]; c.Paswd = Request.Form["signuppassword"]; c.Nom = Request.Form["signupname"]; c.Prenom = Request.Form["signupforname"];
-                c.DateNaissance = DateTime.Now;
+                if (ServiceClient.getInstance().GetClient(Request.Form["signupusername"]) == null)
+                {
+                     c.Login = Request.Form["signupusername"];
+                }
+                else
+                {
+                    return View("../Connexion/Index", "Cet identifiant est déjà utilisé, choisissez en un autre !");
+                }
+               
+                if(Request.Form["signuppassword"] == Request.Form["signupcpassword"])
+                {
+                    c.Paswd = Request.Form["signuppassword"];
+                }
+                else
+                {
+                    return View("../Connexion/Index", "Les mots de passe ne correspondent pas !");
+                }
+
+                c.Nom = Request.Form["signupname"];
+                c.Prenom = Request.Form["signupforname"];
+                if (!String.IsNullOrEmpty(Request.Form["naissance"]))
+                {
+                    c.DateNaissance = DateTime.Parse(Request.Form["naissance"]);
+                }
+                else
+                {
+                    c.DateNaissance = DateTime.Now;
+                }
                 ServiceClient.getInstance().InsertClient(c);
                 return RedirectToAction("Index", "Home");
             }
@@ -96,7 +154,10 @@ namespace Autolib.Controllers
                 {
                     Client c = ServiceClient.getInstance().GetClient(client.IdClient);
                     c.Login = client.Login;
-                    c.Paswd = client.Paswd;
+                    if(client.Paswd != null || client.Paswd!="")
+                    {
+                        c.Paswd = client.Paswd;
+                    }                
                     c.Nom = client.Nom;
                     c.Prenom = client.Prenom;
                     c.DateNaissance = client.DateNaissance;
@@ -113,7 +174,7 @@ namespace Autolib.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Clients", new { id = client.IdClient} );
             }
             return View(client);
         }
@@ -126,13 +187,24 @@ namespace Autolib.Controllers
                 return NotFound();
             }
 
-            var client = await _context.Client
-                .FirstOrDefaultAsync(m => m.IdClient == id);
+            var client = ServiceClient.getInstance().GetClient((int) id);
             if (client == null)
             {
                 return NotFound();
             }
+            foreach(Reservation r in ServiceReservation.getInstance().getReservations(client))
+            {
+                _context.Reservation.Remove(r);
+            }
+            foreach(Utilise u in ServiceUtilise.getInstance().getUtilises(client))
+            {
+                _context.Utilise.Remove(u);
+            }
+            _context.SaveChanges();
 
+            
+            _context.Client.Remove(client);
+            await _context.SaveChangesAsync();
             HttpContext.Session.SetString("nom", "");
             HttpContext.Session.SetInt32("id", 0);
             return RedirectToAction("Index", "Home");

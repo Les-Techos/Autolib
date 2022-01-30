@@ -37,5 +37,22 @@ namespace Autolib.Models.Dao
                 throw new Exception(e.Message);
             }
         }
+
+        public List<Utilise> getUtilises(Client c)
+        {
+            List<Utilise> vec = null;
+
+            try
+            {
+                vec = (from u in context.Utilise
+                       where u.Client == c.IdClient
+                       select u).ToList<Utilise>();
+                return vec;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }

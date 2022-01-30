@@ -75,11 +75,19 @@ namespace Autolib.Models.Dao
         {
             // Query the database for the row to be updated.
             Byte[] selmdp = MonMotPassHash.GenerateSalt();
+            if (!String.IsNullOrEmpty(c.Paswd)) {
             Byte[] mdpByte = MonMotPassHash.PasswordHashe(c.Paswd, selmdp);
-            c.Paswd = MonMotPassHash.BytesToString(mdpByte);
+                c.Paswd = MonMotPassHash.BytesToString(mdpByte);
             c.Salt = MonMotPassHash.BytesToString(selmdp);
-            // Execute the query, and change the column values
-            // you want to change.
+                // Execute the query, and change the column values
+                // you want to change.
+            }
+            else
+            {
+                c.Paswd = GetClient(c.IdClient).Paswd;
+            }
+            
+            
 
             // Submit the changes to the database.
             try
@@ -132,7 +140,23 @@ namespace Autolib.Models.Dao
 
         public void RemoveClient(Client c)
         {
-
+            foreach(Reservation r in c.Reservation)
+            {
+                context.Reservation.Remove(r);
+            }
+            foreach (Utilise u in c.Utilise)
+            {
+                context.Utilise.Remove(u);
+            }
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                // Provide for exceptions.
+            }
             context.Client.Remove(c);
             try
             {
